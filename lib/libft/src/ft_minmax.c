@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 13:48:35 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:34 by mkling           ###   ########.fr       */
+/*   Created: 2024/09/30 15:46:37 by mkling            #+#    #+#             */
+/*   Updated: 2024/10/04 15:57:51 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
-
-int	main(int argc, char **argv)
+int	ft_max(int num1, int num2)
 {
-	t_display	display;
+	if (num1 > num2)
+		return (num1);
+	else
+		return (num2);
+}
 
-	if (argc > 6 || argv[1] != NULL)
-		return (1);
-	display = init_display();
-	success_exit(&display);
-	return (0);
+int	ft_min(int num1, int num2)
+{
+	if (num1 < num2)
+		return (num1);
+	else
+		return (num2);
 }

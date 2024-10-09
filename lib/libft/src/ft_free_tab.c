@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 13:48:35 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:34 by mkling           ###   ########.fr       */
+/*   Created: 2024/09/10 13:53:31 by mkling            #+#    #+#             */
+/*   Updated: 2024/10/04 15:35:15 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../inc/libft.h"
 
-int	main(int argc, char **argv)
+void	ft_free_tab(char **array)
 {
-	t_display	display;
+	size_t	i;
 
-	if (argc > 6 || argv[1] != NULL)
-		return (1);
-	display = init_display();
-	success_exit(&display);
-	return (0);
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

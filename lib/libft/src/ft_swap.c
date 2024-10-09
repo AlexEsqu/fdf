@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 13:48:35 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:34 by mkling           ###   ########.fr       */
+/*   Created: 2024/10/04 12:08:43 by mkling            #+#    #+#             */
+/*   Updated: 2024/10/04 12:09:40 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
-
-int	main(int argc, char **argv)
+void	ft_swap_int(int *a, int *b)
 {
-	t_display	display;
+	int	tmp;
 
-	if (argc > 6 || argv[1] != NULL)
-		return (1);
-	display = init_display();
-	success_exit(&display);
-	return (0);
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

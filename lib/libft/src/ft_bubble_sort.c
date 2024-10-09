@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bubble_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 13:48:35 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:34 by mkling           ###   ########.fr       */
+/*   Created: 2024/10/04 12:06:19 by mkling            #+#    #+#             */
+/*   Updated: 2024/10/04 19:12:31 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../inc/libft.h"
 
-int	main(int argc, char **argv)
+void	ft_bubble_sort(int *num_array, int size_array)
 {
-	t_display	display;
+	int	index1;
+	int	index2;
 
-	if (argc > 6 || argv[1] != NULL)
-		return (1);
-	display = init_display();
-	success_exit(&display);
-	return (0);
+	index1 = 0;
+	while (index1 < size_array)
+	{
+		index2 = 0;
+		while (index2 < size_array - index1 - 1)
+		{
+			if (num_array[index2] > num_array[index2 + 1])
+				ft_swap_int(&num_array[index2], &num_array[index2 + 1]);
+			index2++;
+		}
+		index1++;
+	}
 }

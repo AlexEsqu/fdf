@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 13:48:35 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:34 by mkling           ###   ########.fr       */
+/*   Created: 2024/05/21 14:47:23 by mkling            #+#    #+#             */
+/*   Updated: 2024/10/06 17:55:49 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../inc/libft.h"
 
-int	main(int argc, char **argv)
+int	ft_islower(int c)
 {
-	t_display	display;
+	if (c >= 'a' && c <= 'z')
+		return (1024);
+	return (0);
+}
 
-	if (argc > 6 || argv[1] != NULL)
-		return (1);
-	display = init_display();
-	success_exit(&display);
+int	ft_isupper(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (1024);
+	return (0);
+}
+
+int	ft_isalpha(int c)
+{
+	if (ft_islower(c) || ft_isupper(c))
+		return (1024);
+	return (0);
+}
+
+int	ft_isalnum(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (8);
 	return (0);
 }
