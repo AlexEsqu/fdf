@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 14:06:35 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/15 17:40:01 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,20 @@
 
 void	wipe_window(t_display *display)
 {
-	mlx_destroy_window(display->link, display->window);
-	mlx_destroy_display(display->link);
-	free(display->link);
+	if (display)
+	{
+		if (display->img.mlx_img)
+			mlx_destroy_image(display->link, display->img.mlx_img);
+		if (display->map)
+		{
+			ft_free_matrix(display->map->matrix, display->map->column_count);
+			free(display->map);
+			display->map = NULL;
+		}
+		mlx_destroy_window(display->link, display->window);
+		mlx_destroy_display(display->link);
+		free(display->link);
+	}
 }
 
 void	error_exit(char *error_message, t_display *display)
@@ -30,25 +41,14 @@ void	error_exit(char *error_message, t_display *display)
 
 void	success_exit(t_display *display)
 {
-	if (display->img.mlx_img)
-		mlx_destroy_image(display->link, display->img.mlx_img);
-	if (display)
-		wipe_window(display);
+	wipe_window(display);
 	exit(0);
 }
 
 int	handle_intput(int keysym, t_display *display)
 {
-	
 	if (keysym == XK_Escape)
 		success_exit(display);
-	if (keysym == XK_R)
-	{
-		mlx_destroy_image(display->link, display->img.mlx_img);
-		paint_background(&display->img, 0xff0000);
-		mlx_put_image_to_window(display->link, display->window,
-			display->img.mlx_img, 0, 0);
-	}
 	return (0);
 }
 
@@ -62,8 +62,10 @@ t_display	init_display(void)
 	display.window = mlx_new_window(display.link,
 			WIN_WIDTH, WIN_HEIGHT, "FDF");
 	if (!display.window)
-		error_exit("display init", &display);
+		error_exit("window allocation", &display);
 	display.img.mlx_img = mlx_new_image(display.link, WIN_WIDTH, WIN_HEIGHT);
+	if (!display.img.mlx_img)
+		error_exit("image allocation", &display);
 	display.img.address = mlx_get_data_addr(display.img.mlx_img,
 			&display.img.bit_per_pixel, &display.img.line_len,
 			&display.img.endian);
