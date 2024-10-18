@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 23:23:44 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:57:02 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,8 @@ t_pts	turn_into_pts(char *map_point, t_display *display)
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);
-		point.color = 0xffffff;
-		fprintf(stderr, "made pts %d:\t(x:%d, y:%d, z:%d)\n",
-			display->grid->pts_count, point.x, point.y, point.z);
+		point.color = WHITE;
 		apply_zoom_and_offset(&point, display);
-		fprintf(stderr, "made pts %d:\t(x:%d, y:%d, z:%d)\n",
-			display->grid->pts_count, point.x, point.y, point.z);
 		return (point);
 	}
 	values = ft_split(map_point, ',');

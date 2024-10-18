@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 23:24:58 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:56:50 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,17 @@ void	print_grid(t_display *display)
 
 	index = 0;
 	while (index < display->grid->pts_count)
-		put_point(display, &display->grid->pts_array[index++]);
-	index = 1;
-	while (index < display->grid->pts_count)
 	{
-		if (index % display->grid->col_count != 0)
-			plot_line(&display->grid->pts_array[index - 1],
-				&display->grid->pts_array[index], display);
-		if (index > display->grid->row_count)
-			plot_line(&display->grid->pts_array[index - display->grid->col_count],
-				&display->grid->pts_array[index], display);
+		put_point(display, &display->grid->pts_array[index]);
+		if (index >= 1)
+		{
+			if (index % display->grid->col_count != 0)
+				plot_line(&display->grid->pts_array[index - 1],
+					&display->grid->pts_array[index], display);
+			if (index > display->grid->row_count)
+				plot_line(&display->grid->pts_array[index - display->grid->col_count],
+					&display->grid->pts_array[index], display);
+		}
 		index++;
 	}
 }
@@ -96,10 +97,8 @@ int	render(t_display *display)
 {
 	if (display->window == NULL)
 		return (1);
-	paint_background(&display->img, 0x000000);
+	paint_background(&display->img, BLACK);
 	print_grid(display);
-	plot_line(&display->grid->pts_array[0],
-		&display->grid->pts_array[1], display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
 	return (0);
