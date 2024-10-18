@@ -6,29 +6,18 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 18:23:57 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:02:04 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
-
-t_pts	make_pts_with_offset(t_pts *point, t_display *display)
-{
-	t_pts	new_point;
-
-	new_point.x = point->x + display->zoom;
-	new_point.y = point->y + display->zoom;
-	new_point.z = point->z;
-	new_point.color = point->color;
-	return (new_point);
-}
 
 void	print_line(t_line *line, t_display *display)
 {
 	while (line->origin.x <= WIN_WIDTH && line->origin.y <= WIN_HEIGHT
 		&& line->origin.x >= 0 && line->origin.y >= 0)
 	{
-		put_pixel(&display->img, line->origin.x, line->origin.y, 0xFFFFFF);
+		put_point(display, &line->origin);
 		line->error2 = 2 * line->error;
 		if (line->error2 >= line->delta.y)
 		{
@@ -51,21 +40,19 @@ void	plot_line(t_pts *origin, t_pts *end, t_display *display)
 {
 	t_line	line;
 
-	line.origin = make_pts_with_offset(origin, display);
-	line.end = make_pts_with_offset(end, display);
+	line.origin = *origin;
+	line.end = *end;
 	line.sign.x = 1;
 	line.sign.y = 1;
 	line.delta.x = ft_abs(line.end.x - line.origin.x);
-	if (line.origin.x < line.end.x)
+	if (line.origin.x > line.end.x)
 		line.sign.x = -1;
 	line.delta.y = -ft_abs(line.end.y - line.origin.y);
-	if (line.origin.y < line.end.y)
+	if (line.origin.y > line.end.y)
 		line.sign.y = -1;
 	line.error = line.delta.x + line.delta.y;
 	print_line(&line, display);
 }
-
-
 
 // void	slope_less_than_one(t_pts *origin, t_pts *end, t_display *display)
 // {

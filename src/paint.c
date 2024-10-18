@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 18:24:31 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:05:39 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,23 @@ void	put_pixel(t_image *img, int x, int y, int color)
 	}
 }
 
-void	put_point(t_display *display, t_pts pts)
+void	put_point(t_display *display, t_pts *pts)
 {
 	char	*pixel;
 	int		i;
 
+	// if (pts->x < 0 || pts->x > WIN_WIDTH
+	// 	|| pts->y < 0 || pts->y > WIN_WIDTH)
+	// 	return ;
 	i = display->img.bit_per_pixel - 8;
-	pixel = display->img.address + (pts.y * display->img.line_len * display->zoom
-			+ (pts.x * display->zoom) * (display->img.bit_per_pixel / 8));
+	pixel = display->img.address + (pts->y * display->img.line_len
+			+ pts->x * (display->img.bit_per_pixel / 8));
 	while (i >= 0)
 	{
 		if (display->img.endian != 0)
-			*pixel++ = (pts.color >> i) & 0xFF;
+			*pixel++ = (pts->color >> i) & 0xFF;
 		else
-			*pixel++ = (pts.color >> (display->img.bit_per_pixel
+			*pixel++ = (pts->color >> (display->img.bit_per_pixel
 						- 8 - i)) & 0xFF;
 		i -= 8;
 	}
@@ -76,28 +79,18 @@ void	print_grid(t_display *display)
 	index = 0;
 	while (index < display->grid->pts_count)
 	{
-		// fprintf(stderr, "printing pts %d:\t (x:%d, y:%d, z:%d)\n", index,
-		// 	display->grid->pts_array[index].x,
-		// 	display->grid->pts_array[index].y,
-		// 	display->grid->pts_array[index].z);
-		put_point(display, display->grid->pts_array[index]);
-		index++;
+		put_point(display, &display->grid->pts_array[index++]);
 	}
 }
 
 int	render(t_display *display)
 {
-
 	if (display->window == NULL)
 		return (1);
-	display->offset_x = WIN_WIDTH / 2;
-	display->offset_y = WIN_HEIGHT / 2;
-	display->zoom = 20;
 	paint_background(&display->img, 0x000000);
-	
 	print_grid(display);
 	plot_line(&display->grid->pts_array[0],
-		&display->grid->pts_array[10], display);
+		&display->grid->pts_array[1], display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 18:15:19 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 22:31:39 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,39 @@ void	check_grid_size_syntax(char *map_filepath, t_grid *grid)
 	grid->row_count = line_count;
 }
 
-t_pts	turn_into_pts(char *map_point, t_grid *grid)
+void	apply_zoom_and_offset(t_pts *point, t_display *display)
+{
+	// point->x -= display->grid->col_count - 1;
+	// point->y -= display->grid->row_count - 1;
+	point->x *= display->zoom;
+	point->y *= display->zoom;
+	point->z *= display->zoom;
+	point->x += display->offset_x;
+	point->y += display->offset_y;
+}
+
+t_pts	turn_into_pts(char *map_point, t_display *display)
 {
 	t_pts	point;
 	char	**values;
 
-	point.x = grid->pts_count / grid->col_count;
-	point.y = grid->pts_count % grid->col_count;
+	point.x = display->grid->pts_count / display->grid->col_count;
+	point.y = display->grid->pts_count % display->grid->col_count;
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);
 		point.color = 0xffffff;
-		// fprintf(stderr, "made pts %d:\t(x:%d, y:%d, z:%d)\n",
-		// 	grid->pts_count, point.x, point.y, point.z);
+		fprintf(stderr, "made pts %d:\t(x:%d, y:%d, z:%d)\n",
+			display->grid->pts_count, point.x, point.y, point.z);
+		apply_zoom_and_offset(&point, display);
+		fprintf(stderr, "made pts %d:\t(x:%d, y:%d, z:%d)\n",
+			display->grid->pts_count, point.x, point.y, point.z);
 		return (point);
 	}
 	values = ft_split(map_point, ',');
 	point.z = ft_atoi(values[0]);
 	point.color = ft_atoi(values[1]);
+	apply_zoom_and_offset(&point, display);
 	ft_free_tab(values);
 	return (point);
 }
@@ -96,7 +111,7 @@ void	split_line_into_pts(char *line, t_display *display)
 	while (split_line[index])
 	{
 		display->grid->pts_array[display->grid->pts_count]
-			= turn_into_pts(split_line[index], display->grid);
+			= turn_into_pts(split_line[index], display);
 		display->grid->pts_count++;
 		index++;
 	}
@@ -109,11 +124,14 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	int		index;
 	char	*line;
 
+	display->offset_x = WIN_WIDTH / 2;
+	display->offset_y = WIN_HEIGHT / 2;
+	display->zoom = 15;
 	display->grid = ft_calloc(1, sizeof(t_grid));
 	check_grid_size_syntax(map_filepath, display->grid);
 	fd = open_file(map_filepath);
-	display->grid->pts_array = ft_calloc((display->grid->row_count * display->grid->col_count),
-		sizeof(t_pts));
+	display->grid->pts_array = ft_calloc((display->grid->row_count
+				* display->grid->col_count), sizeof(t_pts));
 	index = 0;
 	line = get_next_line(fd);
 	while (line)
