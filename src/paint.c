@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/15 17:46:00 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 17:52:11 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,26 @@ void	put_pixel(t_image *img, int x, int y, int color)
 	}
 }
 
-int	paint_background(t_image *img, int color)
+void	put_point(t_display *display, t_pts pts)
+{
+	char	*pixel;
+	int		i;
+
+	i = display->img.bit_per_pixel - 8;
+	pixel = display->img.address + (pts.y * display->img.line_len * display->offset
+			+ (pts.x * display->offset) * (display->img.bit_per_pixel / 8));
+	while (i >= 0)
+	{
+		if (display->img.endian != 0)
+			*pixel++ = (pts.color >> i) & 0xFF;
+		else
+			*pixel++ = (pts.color >> (display->img.bit_per_pixel
+						- 8 - i)) & 0xFF;
+		i -= 8;
+	}
+}
+
+void	paint_background(t_image *img, int color)
 {
 	int	row;
 	int	column;
@@ -48,22 +67,34 @@ int	paint_background(t_image *img, int color)
 			put_pixel(img, column++, row, color);
 		++row;
 	}
-	return (0);
+}
+
+void	print_grid(t_display *display)
+{
+	int	index;
+
+	index = 0;
+	while (index < display->grid->pts_count)
+	{
+		// fprintf(stderr, "printing pts %d:\t (x:%d, y:%d, z:%d)\n", index,
+		// 	display->grid->pts_array[index].x,
+		// 	display->grid->pts_array[index].y,
+		// 	display->grid->pts_array[index].z);
+		put_point(display, display->grid->pts_array[index]);
+		index++;
+	}
 }
 
 int	render(t_display *display)
 {
-	t_pts	origin;
-	t_pts	end;
 
 	if (display->window == NULL)
 		return (1);
-	paint_background(&display->img, 0x0000ff);
-	origin.x = 1;
-	origin.y = 1;
-	end.x = 1;
-	end.y = 500;
-	plot_line(&origin, &end, display);
+	display->offset = 5;
+	paint_background(&display->img, 0x000000);
+	print_grid(display);
+	plot_line(&display->grid->pts_array[0],
+		&display->grid->pts_array[15], display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
 	return (0);
