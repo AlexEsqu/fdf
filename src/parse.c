@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 22:31:39 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:23:44 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	int		index;
 	char	*line;
 
-	display->offset_x = WIN_WIDTH / 2;
-	display->offset_y = WIN_HEIGHT / 2;
-	display->zoom = 15;
+	display->offset_x = WIN_WIDTH / 4;
+	display->offset_y = WIN_HEIGHT / 4;
+	display->zoom = 30;
 	display->grid = ft_calloc(1, sizeof(t_grid));
 	check_grid_size_syntax(map_filepath, display->grid);
 	fd = open_file(map_filepath);
