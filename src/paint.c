@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 17:52:11 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 18:24:31 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	put_point(t_display *display, t_pts pts)
 	int		i;
 
 	i = display->img.bit_per_pixel - 8;
-	pixel = display->img.address + (pts.y * display->img.line_len * display->offset
-			+ (pts.x * display->offset) * (display->img.bit_per_pixel / 8));
+	pixel = display->img.address + (pts.y * display->img.line_len * display->zoom
+			+ (pts.x * display->zoom) * (display->img.bit_per_pixel / 8));
 	while (i >= 0)
 	{
 		if (display->img.endian != 0)
@@ -90,11 +90,14 @@ int	render(t_display *display)
 
 	if (display->window == NULL)
 		return (1);
-	display->offset = 5;
+	display->offset_x = WIN_WIDTH / 2;
+	display->offset_y = WIN_HEIGHT / 2;
+	display->zoom = 20;
 	paint_background(&display->img, 0x000000);
+	
 	print_grid(display);
 	plot_line(&display->grid->pts_array[0],
-		&display->grid->pts_array[15], display);
+		&display->grid->pts_array[10], display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
 	return (0);

@@ -6,32 +6,11 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 17:38:58 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/18 18:15:19 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
-
-/* DEBUG */
-// void	print_matrix(int **matrix, int sub_tab_len)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (matrix[i])
-// 	{
-// 		j = 0;
-// 		fprintf(stderr, "row %d:\t", i);
-// 		while (j < sub_tab_len)
-// 		{
-// 			fprintf(stderr, "%d\t", matrix[i][j]);
-// 			j++;
-// 		}
-// 		fprintf(stderr, "\n");
-// 		i++;
-// 	}
-// }
 
 int	open_file(char *map_filepath)
 {
