@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/19 23:22:05 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/19 23:43:20 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ t_point	turn_into_pts(char *map_point, t_display *display)
 
 	point.y = display->grid->pts_count / display->grid->col_count;
 	point.x = display->grid->pts_count % display->grid->col_count;
-	fprintf(stderr, "point %d at (x:%d, y:%d)\n", display->grid->pts_count, point.x, point.y);
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);

@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/19 23:16:14 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/19 23:43:10 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,14 @@ void	print_grid(t_display *display)
 	index = grid->pts_count - 1;
 	while (index > 0)
 	{
-		fprintf(stderr, "index %d\n", index);
 		if (index % grid->col_count != 0)
 		{
-			fprintf(stderr, "print between %d (%d, %d) and %d (%d, %d) because uneven\n",
-				index - 1, grid->pts_array[index - 1].x,
-				grid->pts_array[index - 1].y, index, grid->pts_array[index].x,
-				grid->pts_array[index].y);
 			plot_line(grid->pts_array[index - 1],
 				grid->pts_array[index], display);
 		}
-		if (index >= grid->row_count)
+		if (index >= grid->col_count)
 		{
-			fprintf(stderr, "print between %d (%d, %d) and %d (%d, %d) because sup row\n",
-				index - 1, grid->pts_array[index - grid->col_count].x,
-				grid->pts_array[index - grid->col_count].y, index,
-				grid->pts_array[index].x, grid->pts_array[index].y);
-			plot_line(grid->pts_array[index
-				- grid->col_count],
+			plot_line(grid->pts_array[index - grid->col_count],
 				grid->pts_array[index], display);
 		}
 		index--;

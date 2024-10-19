@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/19 23:02:37 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/19 23:43:35 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ void	plot_line(t_point origin, t_point end, t_display *display)
 {
 	t_line	line;
 
-	line.origin = isometrify(apply_zoom_and_offset(origin, display));
-	line.end = isometrify(apply_zoom_and_offset(end, display));
-	fprintf(stderr, "plotting line between {%d, %d} and {%d, %d}\n", line.origin.x, line.origin.y, line.end.x, line.end.y);
+	// fprintf(stderr, "initial:\t{%d, %d} and {%d, %d}\n", origin.x, origin.y, end.x, end.y);
+	line.origin = apply_zoom_and_offset(origin, display);
+	line.end = apply_zoom_and_offset(end, display);
+	// fprintf(stderr, "zoomed:\t\t{%d, %d} and {%d, %d}\n", origin.x, origin.y, end.x, end.y);
+	line.origin = isometrify(line.origin);
+	line.end = isometrify(line.end);
+	// fprintf(stderr, "isometrized:\t{%d, %d} and {%d, %d}\n", line.origin.x, line.origin.y, line.end.x, line.end.y);
 	line.sign.x = 1;
 	line.sign.y = 1;
 	line.delta.x = ft_abs(line.end.x - line.origin.x);
