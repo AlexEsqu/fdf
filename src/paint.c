@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/18 23:56:50 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/19 23:16:14 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,47 @@ void	put_pixel(t_image *img, int x, int y, int color)
 	}
 }
 
-void	put_point(t_display *display, t_pts *pts)
+void	put_point(t_display *display, t_point point)
 {
 	char	*pixel;
 	int		i;
 
-	// if (pts->x < 0 || pts->x > WIN_WIDTH
-	// 	|| pts->y < 0 || pts->y > WIN_WIDTH)
+	// if (point->x < 0 || point->x > WIN_WIDTH
+	// 	|| point->y < 0 || point->y > WIN_WIDTH)
 	// 	return ;
 	i = display->img.bit_per_pixel - 8;
-	pixel = display->img.address + (pts->y * display->img.line_len
-			+ pts->x * (display->img.bit_per_pixel / 8));
+	pixel = display->img.address + (point.y * display->img.line_len
+			+ point.x * (display->img.bit_per_pixel / 8));
 	while (i >= 0)
 	{
 		if (display->img.endian != 0)
-			*pixel++ = (pts->color >> i) & 0xFF;
+			*pixel++ = (point.color >> i) & 0xFF;
 		else
-			*pixel++ = (pts->color >> (display->img.bit_per_pixel
+			*pixel++ = (point.color >> (display->img.bit_per_pixel
 						- 8 - i)) & 0xFF;
 		i -= 8;
 	}
+}
+t_point	isometrify(t_point point)
+{
+	int	tmp;
+
+	tmp = point.x;
+	point.x = (tmp - point.y) * cos(0.523599);
+	point.y = (tmp + point.y) * sin(0.523599) - point.z;
+	return (point);
+}
+
+t_point	apply_zoom_and_offset(t_point point, t_display *display)
+{
+	// point.x -= display->grid->row_count / 2 + 1;
+	// point.y -= display->grid->col_count / 2 + 1;
+	point.x *= display->zoom;
+	point.y *= display->zoom;
+	point.z *= display->zoom;
+	point.x += display->offset_x;
+	point.y += display->offset_y;
+	return (point);
 }
 
 void	paint_background(t_image *img, int color)
@@ -74,22 +95,34 @@ void	paint_background(t_image *img, int color)
 
 void	print_grid(t_display *display)
 {
-	int	index;
+	int		index;
+	t_grid	*grid;
 
-	index = 0;
-	while (index < display->grid->pts_count)
+	grid = display->grid;
+	index = grid->pts_count - 1;
+	while (index > 0)
 	{
-		put_point(display, &display->grid->pts_array[index]);
-		if (index >= 1)
+		fprintf(stderr, "index %d\n", index);
+		if (index % grid->col_count != 0)
 		{
-			if (index % display->grid->col_count != 0)
-				plot_line(&display->grid->pts_array[index - 1],
-					&display->grid->pts_array[index], display);
-			if (index > display->grid->row_count)
-				plot_line(&display->grid->pts_array[index - display->grid->col_count],
-					&display->grid->pts_array[index], display);
+			fprintf(stderr, "print between %d (%d, %d) and %d (%d, %d) because uneven\n",
+				index - 1, grid->pts_array[index - 1].x,
+				grid->pts_array[index - 1].y, index, grid->pts_array[index].x,
+				grid->pts_array[index].y);
+			plot_line(grid->pts_array[index - 1],
+				grid->pts_array[index], display);
 		}
-		index++;
+		if (index >= grid->row_count)
+		{
+			fprintf(stderr, "print between %d (%d, %d) and %d (%d, %d) because sup row\n",
+				index - 1, grid->pts_array[index - grid->col_count].x,
+				grid->pts_array[index - grid->col_count].y, index,
+				grid->pts_array[index].x, grid->pts_array[index].y);
+			plot_line(grid->pts_array[index
+				- grid->col_count],
+				grid->pts_array[index], display);
+		}
+		index--;
 	}
 }
 
@@ -101,5 +134,6 @@ int	render(t_display *display)
 	print_grid(display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
+	fprintf(stderr, "recalcul\n");
 	return (0);
 }
