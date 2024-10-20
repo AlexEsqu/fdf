@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/19 23:43:20 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/20 01:35:20 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_grid_size_syntax(char *map_filepath, t_grid *grid)
 	fd = open_file(map_filepath);
 	line_count = 0;
 	line = get_next_line(fd);
-	grid->col_count = countword(line, ' ');
+	grid->width = countword(line, ' ');
 	while (line != NULL)
 	{
 		line_count++;
@@ -59,7 +59,7 @@ void	check_grid_size_syntax(char *map_filepath, t_grid *grid)
 	}
 	close(fd);
 	grid->pts_count = 0;
-	grid->row_count = line_count;
+	grid->height = line_count;
 }
 
 t_point	turn_into_pts(char *map_point, t_display *display)
@@ -67,8 +67,8 @@ t_point	turn_into_pts(char *map_point, t_display *display)
 	t_point	point;
 	char	**values;
 
-	point.y = display->grid->pts_count / display->grid->col_count;
-	point.x = display->grid->pts_count % display->grid->col_count;
+	point.y = display->grid->pts_count / display->grid->width;
+	point.x = display->grid->pts_count % display->grid->width;
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);
@@ -106,14 +106,17 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	int		index;
 	char	*line;
 
-	display->offset_x = WIN_WIDTH / 2;
-	display->offset_y = 0;
+	display->offset_x = WIN_WIDTH;
+	display->offset_y = WIN_HEIGHT / 3;
 	display->zoom = 15;
+	display->alpha = 0;
+	display->gamma = 0;
+	display->tetha = 0;
 	display->grid = ft_calloc(1, sizeof(t_grid));
 	check_grid_size_syntax(map_filepath, display->grid);
 	fd = open_file(map_filepath);
-	display->grid->pts_array = ft_calloc((display->grid->row_count
-				* display->grid->col_count), sizeof(t_point));
+	display->grid->pts_array = ft_calloc((display->grid->height
+				* display->grid->width), sizeof(t_point));
 	index = 0;
 	line = get_next_line(fd);
 	while (line)

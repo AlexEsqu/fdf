@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/19 23:43:10 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/20 01:30:33 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	put_point(t_display *display, t_point point)
 	char	*pixel;
 	int		i;
 
-	// if (point->x < 0 || point->x > WIN_WIDTH
-	// 	|| point->y < 0 || point->y > WIN_WIDTH)
-	// 	return ;
 	i = display->img.bit_per_pixel - 8;
 	pixel = display->img.address + (point.y * display->img.line_len
 			+ point.x * (display->img.bit_per_pixel / 8));
@@ -56,6 +53,7 @@ void	put_point(t_display *display, t_point point)
 		i -= 8;
 	}
 }
+
 t_point	isometrify(t_point point)
 {
 	int	tmp;
@@ -68,8 +66,8 @@ t_point	isometrify(t_point point)
 
 t_point	apply_zoom_and_offset(t_point point, t_display *display)
 {
-	// point.x -= display->grid->row_count / 2 + 1;
-	// point.y -= display->grid->col_count / 2 + 1;
+	point.x -= display->grid->height / 2 + 1;
+	point.y -= display->grid->width / 2 + 1;
 	point.x *= display->zoom;
 	point.y *= display->zoom;
 	point.z *= display->zoom;
@@ -102,14 +100,14 @@ void	print_grid(t_display *display)
 	index = grid->pts_count - 1;
 	while (index > 0)
 	{
-		if (index % grid->col_count != 0)
+		if (index % grid->width != 0)
 		{
 			plot_line(grid->pts_array[index - 1],
 				grid->pts_array[index], display);
 		}
-		if (index >= grid->col_count)
+		if (index >= grid->width)
 		{
-			plot_line(grid->pts_array[index - grid->col_count],
+			plot_line(grid->pts_array[index - grid->width],
 				grid->pts_array[index], display);
 		}
 		index--;
