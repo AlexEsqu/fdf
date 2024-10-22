@@ -6,7 +6,7 @@
 #    By: mkling <mkling@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/14 14:56:12 by mkling            #+#    #+#              #
-#    Updated: 2024/10/09 16:40:48 by mkling           ###   ########.fr        #
+#    Updated: 2024/10/23 00:59:43 by mkling           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,13 @@ INC			= -I./lib/libft \
 			-I./lib/minilibx
 
 SRCS		= main.c \
-			paint.c \
 			display.c \
-			rasterize.c
+			parse.c \
+			project.c \
+			render.c \
+			transform.c \
+			error.c \
+			input.c
 
 LIBS		= ./lib/libft/libft.a \
 			./lib/minilibx/libmlx.a \
@@ -49,7 +53,7 @@ $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
 debug:		$(OBJS)
 			$(MAKE) -C ./lib/libft
 			$(MAKE) -C ./lib/minilibx
-			$(CC) $(CFLAGS) -g -o $(NAME) $(SRCS) $(LIBS)
+			$(CC) $(CFLAGS) -g -o $(NAME) $(addprefix $(SRC_DIR)/, $(SRCS)) $(LIBS)
 
 clean:
 			$(MAKE) -C ./lib/libft clean

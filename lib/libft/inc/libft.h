@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:15:08 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/09 16:42:44 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/16 12:44:12 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ void	ft_bubble_sort(int	*num_array, int size_array);
 void	ft_swap_int(int *a, int *b);
 int		is_too_long_for_int(char *str);
 int		ft_abs(int num);
+int		ft_isdigit_or_hexa(int c);
+void	ft_free_matrix(int	**matrix);
 
 #endif
