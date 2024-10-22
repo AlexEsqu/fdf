@@ -6,21 +6,11 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/22 18:17:00 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 00:26:07 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
-
-t_point	isometrify(t_point point)
-{
-	int	tmp;
-
-	tmp = point.x;
-	point.x = (tmp - point.y) * cos(0.523599);
-	point.y = (tmp + point.y) * sin(0.523599) - point.z;
-	return (point);
-}
 
 void	print_line(t_line *line, t_display *display)
 {
@@ -50,13 +40,10 @@ void	plot_line(t_point origin, t_point end, t_display *display)
 {
 	t_line	line;
 
-	// fprintf(stderr, "initial:\t{%d, %d} and {%d, %d}\n", origin.x, origin.y, end.x, end.y);
 	line.origin = apply_zoom_and_offset(&origin, display);
 	line.end = apply_zoom_and_offset(&end, display);
-	// fprintf(stderr, "zoomed:\t\t{%d, %d} and {%d, %d}\n", origin.x, origin.y, end.x, end.y);
 	line.origin = isometrify(line.origin);
 	line.end = isometrify(line.end);
-	// fprintf(stderr, "isometrized:\t{%d, %d} and {%d, %d}\n", line.origin.x, line.origin.y, line.end.x, line.end.y);
 	line.sign.x = 1;
 	line.sign.y = 1;
 	line.delta.x = ft_abs(line.end.x - line.origin.x);

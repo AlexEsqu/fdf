@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/22 17:44:07 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 00:53:08 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,6 @@ void	wipe(t_display *display)
 		mlx_destroy_display(display->link);
 		free(display->link);
 	}
-}
-
-int	handle_input(int keysym, t_display *display)
-{
-	if (keysym == XK_Escape)
-	{
-		wipe(display);
-		exit(0);
-	}
-	if (keysym == XK_Up)
-	{
-		display->zoom += 10;
-		render(display);
-	}
-	if (keysym == XK_Down)
-	{
-		display->zoom -= 10;
-		render(display);
-	}
-	if (keysym == XK_r)
-	{
-		display->alpha += 1;
-		rotate(display);
-	}
-	if (keysym == XK_R)
-	{
-		display->alpha += 1;
-		rotate(display);
-	}
-	if (keysym == XK_a)
-	{
-		display->offset_y += 10;
-		display->offset_x -= 10;
-		render(display);
-	}
-	if (keysym == XK_d)
-	{
-		display->offset_y -= 10;
-		display->offset_x += 10;
-		render(display);
-	}
-	if (keysym == XK_s)
-	{
-		display->offset_x += 10;
-		display->offset_y += 10;
-		render(display);
-	}
-	if (keysym == XK_w)
-	{
-		display->offset_x -= 10;
-		display->offset_y -= 10;
-		render(display);
-	}
-	printf("Keypress: %d\n", keysym);
-	return (0);
 }
 
 t_display	init_display(char *map_filepath)
