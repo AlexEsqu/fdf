@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paint.c                                            :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/20 01:30:33 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:13:56 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,6 @@ void	put_point(t_display *display, t_point point)
 						- 8 - i)) & 0xFF;
 		i -= 8;
 	}
-}
-
-t_point	isometrify(t_point point)
-{
-	int	tmp;
-
-	tmp = point.x;
-	point.x = (tmp - point.y) * cos(0.523599);
-	point.y = (tmp + point.y) * sin(0.523599) - point.z;
-	return (point);
-}
-
-t_point	apply_zoom_and_offset(t_point point, t_display *display)
-{
-	point.x -= display->grid->height / 2 + 1;
-	point.y -= display->grid->width / 2 + 1;
-	point.x *= display->zoom;
-	point.y *= display->zoom;
-	point.z *= display->zoom;
-	point.x += display->offset_x;
-	point.y += display->offset_y;
-	return (point);
 }
 
 void	paint_background(t_image *img, int color)
