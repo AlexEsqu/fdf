@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 01:00:24 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 13:06:16 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void	plot_line(t_point origin, t_point end, t_display *display);
 void	parse_file_into_grid(char *map_filepath, t_display *display);
 
 /* ROTATING */
-void	rotate_z(t_display *display);
-void	rotate_y(t_display *display);
-void	rotate_x(t_display *display);
+void	rotate_z_axis(t_display *display);
+void	rotate_y_axis(t_display *display);
+void	rotate_x_axis(t_display *display);
 
 /* ERRORS */
 void	exit_if(bool condition, char *error_message, t_display *display);

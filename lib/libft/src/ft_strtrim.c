@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:12:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/04 15:39:31 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:02:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static size_t	indexstart(char const *str, char const *set)
 
 static size_t	indexend(char const *str, char const *set)
 {
-	size_t	i;
+	long	i;
 
 	i = ft_strlen(str) - 1;
 	while (i >= 0)
@@ -51,7 +51,7 @@ static size_t	indexend(char const *str, char const *set)
 		else
 			return (i);
 	}
-	return (i);
+	return ((size_t)i);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)

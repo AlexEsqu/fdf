@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 01:11:16 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 13:19:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	handle_mouse(int button, int x, int y, t_display *display)
 		wipe(display);
 		exit(0);
 	}
-	fprintf(stderr, "clicked on %d, %d\n", x, y);
+	fprintf(stderr, "clicked on %d, %d", x, y);
 	return (0);
 }
 
@@ -42,18 +42,18 @@ int	handle_input(int keysym, t_display *display)
 	}
 	if (keysym == XK_r)
 	{
-		display->alpha += PI_BY_180;
-		rotate_z(display);
+		display->alpha += 0.05;
+		rotate_z_axis(display);
 	}
 	if (keysym == XK_p)
 	{
-		display->gamma += PI_BY_180;
-		rotate_x(display);
+		display->gamma += 0.05;
+		rotate_x_axis(display);
 	}
 	if (keysym == XK_t)
 	{
-		display->tetha += PI_BY_180;
-		rotate_y(display);
+		display->tetha += 0.05;
+		rotate_y_axis(display);
 	}
 	if (keysym == XK_a)
 	{

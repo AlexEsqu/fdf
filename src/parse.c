@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 00:38:32 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 13:15:56 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	display->unit = 1;
 	display->zoom = 10;
 	display->alpha = PI_BY_FOUR;
+	display->tetha = PI_BY_FOUR;
 	display->grid = ft_calloc(1, sizeof(t_grid));
 	check_grid_size_syntax(map_filepath, display->grid);
 	fd = open_file(map_filepath);
