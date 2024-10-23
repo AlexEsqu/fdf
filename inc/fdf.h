@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 13:06:16 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/23 18:21:05 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 1200
+# define HEXADECIMAL "ABCDEF0123456789"
+# define SMOLHEXADEC "abcdef0123456789"
 # define ACCEPT_CHAR "abcdefABCDEF0123456789,x-+ "
 # define BLACK 0x000000
 # define WHITE 0xffffff

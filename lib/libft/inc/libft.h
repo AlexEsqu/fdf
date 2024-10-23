@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:15:08 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/16 12:44:12 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 18:13:24 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ int		is_too_long_for_int(char *str);
 int		ft_abs(int num);
 int		ft_isdigit_or_hexa(int c);
 void	ft_free_matrix(int	**matrix);
+int		ft_atoi_base(char *str, char *base);
 
 #endif

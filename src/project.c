@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 00:26:07 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/23 16:44:02 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	print_line(t_line *line, t_display *display)
 {
-	while (line->origin.x <= WIN_WIDTH && line->origin.y <= WIN_HEIGHT
-		&& line->origin.x >= 0 && line->origin.y >= 0)
+	while (1)
 	{
 		put_point(display, line->origin);
 		line->error2 = 2 * line->error;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 12:19:25 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/23 16:56:26 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,15 @@ int	encode_rgb(t_byte red, t_byte green, t_byte blue)
 	return (red << 16 | green << 8 | blue);
 }
 
-void	put_pixel(t_image *img, int x, int y, int color)
-{
-	char	*pixel;
-	int		i;
-
-	i = img->bit_per_pixel - 8;
-	pixel = img->address + (y * img->line_len + x
-			* (img->bit_per_pixel / 8));
-	while (i >= 0)
-	{
-		if (img->endian != 0)
-			*pixel++ = (color >> i) & 0xFF;
-		else
-			*pixel++ = (color >> (img->bit_per_pixel - 8 - i)) & 0xFF;
-		i -= 8;
-	}
-}
-
 void	put_point(t_display *display, t_point point)
 {
 	char	*pixel;
 	int		i;
 
+	// fprintf(stderr, "point (%d, %d, %d, color : %x)\n", point.x, point.y, point.z, point.color);
+	if (point.x < 0 || point.y < 0
+		|| point.x > WIN_WIDTH || point.y > WIN_HEIGHT)
+		return ;
 	i = display->img.bit_per_pixel - 8;
 	pixel = display->img.address + (point.y * display->img.line_len
 			+ point.x * (display->img.bit_per_pixel / 8));
@@ -51,21 +37,6 @@ void	put_point(t_display *display, t_point point)
 			*pixel++ = (point.color >> (display->img.bit_per_pixel
 						- 8 - i)) & 0xFF;
 		i -= 8;
-	}
-}
-
-void	paint_background(t_image *img, int color)
-{
-	int	row;
-	int	column;
-
-	row = 0;
-	while (row < WIN_HEIGHT)
-	{
-		column = 0;
-		while (column < WIN_WIDTH)
-			put_pixel(img, column++, row, color);
-		++row;
 	}
 }
 
@@ -102,4 +73,37 @@ int	render(t_display *display)
 		display->img.mlx_img, 0, 0);
 	fprintf(stderr, "new render\n");
 	return (0);
+}
+
+void	put_pixel(t_image *img, int x, int y, int color)
+{
+	char	*pixel;
+	int		i;
+
+	i = img->bit_per_pixel - 8;
+	pixel = img->address + (y * img->line_len + x
+			* (img->bit_per_pixel / 8));
+	while (i >= 0)
+	{
+		if (img->endian != 0)
+			*pixel++ = (color >> i) & 0xFF;
+		else
+			*pixel++ = (color >> (img->bit_per_pixel - 8 - i)) & 0xFF;
+		i -= 8;
+	}
+}
+
+void	paint_background(t_image *img, int color)
+{
+	int	row;
+	int	column;
+
+	row = 0;
+	while (row < WIN_HEIGHT)
+	{
+		column = 0;
+		while (column < WIN_WIDTH)
+			put_pixel(img, column++, row, color);
+		++row;
+	}
 }
