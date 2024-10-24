@@ -6,11 +6,11 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:13:10 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 18:13:54 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/24 10:13:16 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../inc/libft.h"
 #include <unistd.h>
 
 int	clean_base(char *base)
@@ -37,16 +37,6 @@ int	clean_base(char *base)
 		i++;
 	}
 	return (1);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }
 
 int	ft_empty_sign(char *str, int i, int *minus)

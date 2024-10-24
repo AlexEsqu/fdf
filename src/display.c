@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 00:53:08 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/24 11:34:34 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ t_display	init_display(char *map_filepath)
 	parse_file_into_grid(map_filepath, &display);
 	render(&display);
 	return (display);
+}
+
+int	success_exit(t_display *display)
+{
+	wipe(display);
+	exit(0);
+	return (0);
 }

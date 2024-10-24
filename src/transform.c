@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:54:19 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 13:25:37 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/24 15:51:49 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,41 @@ t_point	isometrify(t_point point)
 	return (point);
 }
 
-void	rotate_z_axis(t_display *display)
-{
-	int		i;
-	int		tmp;
+// void	rotate_z_axis(t_display *display)
+// {
+// 	int		i;
+// 	int		tmp;
 
-	i = 0;
-	while (i < display->grid->pts_count)
-	{
-		tmp = display->grid->pts_array[i].x;
-		display->grid->pts_array[i].x = tmp * cos(display->gamma)
-			- display->grid->pts_array[i].y * sin(display->gamma);
-		display->grid->pts_array[i].y = tmp * sin(display->gamma)
-			+ display->grid->pts_array[i].y * cos(display->gamma);
-		i++;
-	}
-	render(display);
-}
+// 	i = 0;
+// 	while (i < display->grid->pts_count)
+// 	{
+// 		tmp = display->grid->pts_array[i].x;
+// 		display->grid->pts_array[i].x = tmp * cos(display->gamma)
+// 			- display->grid->pts_array[i].y * sin(display->gamma);
+// 		display->grid->pts_array[i].y = tmp * sin(display->gamma)
+// 			+ display->grid->pts_array[i].y * cos(display->gamma);
+// 		i++;
+// 	}
+// 	render(display);
+// }
 
-void	rotate_y_axis(t_display *display)
-{
-	int		i;
-	int		tmp;
+// void	rotate_y_axis(t_display *display)
+// {
+// 	int		i;
+// 	int		tmp;
 
-	i = 0;
-	while (i < display->grid->pts_count)
-	{
-		tmp = display->grid->pts_array[i].x;
-		display->grid->pts_array[i].x = tmp * cos(display->tetha)
-			- display->grid->pts_array[i].z * sin(display->tetha);
-		display->grid->pts_array[i].z = display->grid->pts_array[i].z
-			* cos(display->tetha) - tmp * cos(display->tetha);
-		i++;
-	}
-	render(display);
-}
+// 	i = 0;
+// 	while (i < display->grid->pts_count)
+// 	{
+// 		tmp = display->grid->pts_array[i].x;
+// 		display->grid->pts_array[i].x = tmp * cos(display->tetha)
+// 			- display->grid->pts_array[i].z * sin(display->tetha);
+// 		display->grid->pts_array[i].z = display->grid->pts_array[i].z
+// 			* cos(display->tetha) - tmp * cos(display->tetha);
+// 		i++;
+// 	}
+// 	render(display);
+// }
 
 // void	rotate_x_axis(t_display *display)
 // {
@@ -75,27 +75,33 @@ void	rotate_y_axis(t_display *display)
 // 	}
 // 	render(display);
 // }
+
 /*
 Generate a rotation matrix on the x axis such as
 [ 1............0...................0...........]
 [ 0.....cos(angle)...-sin(angle).]
 [ 0.....sin(angle)....cos(angle).]
 */
-void	generate_rotation_matrix_x(double angle, double matrix[3][3])
+void	generate_rotation_matrix_x(float angle, float matrix[3][3])
 {
+	float	cosinus;
+	float	sinus;
+
+	cosinus = cos(angle);
+	sinus = sin(angle);
 	matrix[0][0] = 1;
 	matrix[0][1] = 0;
 	matrix[0][2] = 0;
 	matrix[1][0] = 0;
-	matrix[1][1] = cos(angle);
-	fprintf(stderr, "Cosining cos(%f) = %f,", angle, matrix[1][1]);
-	matrix[1][2] = -sin(angle);
+	matrix[1][1] = cosinus;
+	matrix[1][2] = -sinus;
 	matrix[2][0] = 0;
-	matrix[2][1] = sin(angle);
-	matrix[2][2] = cos(angle);
-	fprintf(stderr, "Generated matrix (%f, %f, %f)", matrix[0][0], matrix[0][1], matrix[0][2]);
-	fprintf(stderr, "(%f, %f, %f)", matrix[1][0], matrix[1][1], matrix[1][2]);
-	fprintf(stderr, "(%f, %f, %f)\n\n", matrix[2][0], matrix[2][1], matrix[2][2]);
+	matrix[2][1] = sinus;
+	matrix[2][2] = cosinus;
+	// fprintf(stderr, "Generated matrix (%f, %f, %f)",
+	// 	matrix[0][0], matrix[0][1], matrix[0][2]);
+	// fprintf(stderr, "(%f, %f, %f)", matrix[1][0], matrix[1][1], matrix[1][2]);
+	// fprintf(stderr, "(%f, %f, %f)\n\n", matrix[2][0], matrix[2][1], matrix[2][2]);
 }
 
 /*
@@ -104,23 +110,57 @@ Generate a rotation matrix on the y axis such as
 [ 0.........................1............0.........]
 [ -sin(angle)........0.....cos(angle)]
 */
-void	generate_rotation_matrix_y(double angle, double matrix[3][3])
+void	generate_rotation_matrix_y(float angle, float matrix[3][3])
 {
-	matrix[0][0] = cos(angle);
+	float	cosinus;
+	float	sinus;
+
+	cosinus = cos(angle);
+	sinus = sin(angle);
+	matrix[0][0] = cosinus;
 	matrix[0][1] = 0;
-	matrix[0][2] = sin(angle);
+	matrix[0][2] = sinus;
 	matrix[1][0] = 0;
 	matrix[1][1] = 1;
 	matrix[1][2] = 0;
-	matrix[2][0] = -sin(angle);
+	matrix[2][0] = -sinus;
 	matrix[2][1] = 0;
-	matrix[2][2] = cos(angle);
-	fprintf(stderr, "Generated matrix (%f, %f, %f)", matrix[0][0], matrix[0][1], matrix[0][2]);
+	matrix[2][2] = cosinus;
+	fprintf(stderr, "Generated matrix (%f, %f, %f)",
+		matrix[0][0], matrix[0][1], matrix[0][2]);
 	fprintf(stderr, "(%f, %f, %f)", matrix[1][0], matrix[1][1], matrix[1][2]);
 	fprintf(stderr, "(%f, %f, %f)\n", matrix[2][0], matrix[2][1], matrix[2][2]);
 }
 
-t_point	multiply_by_matrix(t_point point, double matrix[3][3])
+/*
+Generate a rotation matrix on the z axis such as
+[cos(angle) & -sin(angle) & 0 ]
+[ sin(angle) & cos(angle) & 0 ]
+[ 0 & 0 & 1 ]
+*/
+void	generate_rotation_matrix_z(float angle, float matrix[3][3])
+{
+	float	cosinus;
+	float	sinus;
+
+	cosinus = cos(angle);
+	sinus = sin(angle);
+	matrix[0][0] = cosinus;
+	matrix[0][1] = -sinus;
+	matrix[0][2] = 0;
+	matrix[1][0] = sinus;
+	matrix[1][1] = cosinus;
+	matrix[1][2] = 0;
+	matrix[2][0] = 0;
+	matrix[2][1] = 0;
+	matrix[2][2] = 1;
+	fprintf(stderr, "Generated matrix (%f, %f, %f)",
+		matrix[0][0], matrix[0][1], matrix[0][2]);
+	fprintf(stderr, "(%f, %f, %f)", matrix[1][0], matrix[1][1], matrix[1][2]);
+	fprintf(stderr, "(%f, %f, %f)\n\n", matrix[2][0], matrix[2][1], matrix[2][2]);
+}
+
+t_point	multiply_by_matrix(t_point point, float matrix[3][3])
 {
 	t_point	result;
 
@@ -138,20 +178,26 @@ t_point	multiply_by_matrix(t_point point, double matrix[3][3])
 	return (result);
 }
 
-void	rotate_x_axis(t_display *display)
+void	rotate(t_display *display, float angle, char axis)
 {
 	int		index;
-	double	matrix[3][3];
+	float	matrix[3][3];
 	t_grid	*grid;
 
 	grid = display->grid;
 	index = grid->pts_count - 1;
-	generate_rotation_matrix_x(display->tetha, matrix);
+	if (axis == 'x')
+		generate_rotation_matrix_x(angle, matrix);
+	else if (axis == 'y')
+		generate_rotation_matrix_y(angle, matrix);
+	else
+		generate_rotation_matrix_z(angle, matrix);
 	while (index > 0)
 	{
 		multiply_by_matrix(grid->pts_array[index], matrix);
 		index--;
 	}
+	render(display);
 }
 
 void	subtract(t_point *point, t_display *display)
@@ -199,18 +245,5 @@ t_point	apply_zoom_and_offset(t_point *point, t_display *display)
 // 	origin_at_center_grid(point, display);
 // 	apply_zoom(point, display);
 // 	center(point, display);
-// 	return (*point);
-// }
-
-// t_point	apply_zoom_and_offset(t_point *point, t_display *display)
-// {
-// 	subtract(point, display);
-// 	// fprintf(stderr, "subtracted (%d, %d, %d)\n", point->x, point->y, point->z);
-// 	scale(point, display);
-// 	// fprintf(stderr, "scaled (%d, %d, %d)\n", point->x, point->y, point->z);
-// 	zoom(point, display);
-// 	// fprintf(stderr, "zoomed (%d, %d, %d)\n\n", point->x, point->y, point->z);
-// 	center(point, display);
-// 	// fprintf(stderr, "centered (%d, %d, %d)\n", point->x, point->y, point->z);
 // 	return (*point);
 // }

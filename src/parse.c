@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 18:34:58 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:49:19 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_file(char *map_filepath, t_display *display)
 	exit_if((ft_strcmp(&map_filepath[fd_len - 4], ".fdf") != 0),
 		"map file is not .fdf suffixed\n", display);
 	fd = open(map_filepath, O_RDONLY);
-	exit_if(fd < 0, "failed to open the grid file\n", display);
+	exit_if(fd < 0, "failed to open the map file\n", display);
 	return (fd);
 }
 
@@ -33,7 +33,7 @@ void	check_syntax(char *line, t_display *display)
 	while (*line++)
 	{
 		exit_if((ft_strchr(acceptable, *line) == 0 && *line != '\n'),
-			"grid file contains bad values\n", display);
+			"map file contains bad values\n", display);
 	}
 }
 
@@ -70,19 +70,12 @@ t_point	turn_into_pts(char *map_point, t_display *display)
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);
-		point.color = WHITE;
+		point.rgb = WHITE;
 		return (point);
 	}
 	values = ft_split(map_point, ',');
 	point.z = ft_atoi(values[0]);
-	if (strchr(values[1], 'A') || strchr(values[1], 'B')
-		|| strchr(values[1], 'C') || strchr(values[1], 'D')
-		|| strchr(values[1], 'E') || strchr(values[1], 'F'))
-		point.color = ft_atoi_base(values[1], HEXADECIMAL);
-	else
-		point.color = ft_atoi_base(values[1], SMOLHEXADEC);
-	// fprintf(stderr, "value[1] %s is %x - ", values[1], ft_atoi_base(values[1], HEXADECIMAL));
-	// fprintf(stderr, "point (%d, %d, %d, color : %x)\n", point.x, point.y, point.z, point.color);
+	extract_color(&point, values[1]);
 	ft_free_tab(values);
 	return (point);
 }

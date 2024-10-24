@@ -6,7 +6,7 @@
 #    By: mkling <mkling@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/14 14:56:12 by mkling            #+#    #+#              #
-#    Updated: 2024/10/23 00:59:43 by mkling           ###   ########.fr        #
+#    Updated: 2024/10/24 10:14:49 by mkling           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ INC			= -I./lib/libft \
 SRCS		= main.c \
 			display.c \
 			parse.c \
-			project.c \
+			trace.c \
 			render.c \
 			transform.c \
+			color.c \
 			error.c \
 			input.c
 

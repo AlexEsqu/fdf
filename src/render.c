@@ -6,15 +6,43 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 16:56:26 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:49:19 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-int	encode_rgb(t_byte red, t_byte green, t_byte blue)
+void	put_pixel(t_image *img, int x, int y, int color)
 {
-	return (red << 16 | green << 8 | blue);
+	char	*pixel;
+	int		i;
+
+	i = img->bit_per_pixel - 8;
+	pixel = img->address + (y * img->line_len + x
+			* (img->bit_per_pixel / 8));
+	while (i >= 0)
+	{
+		if (img->endian != 0)
+			*pixel++ = (color >> i) & 0xFF;
+		else
+			*pixel++ = (color >> (img->bit_per_pixel - 8 - i)) & 0xFF;
+		i -= 8;
+	}
+}
+
+void	paint_background(t_image *img, int color)
+{
+	int	row;
+	int	column;
+
+	row = 0;
+	while (row < WIN_HEIGHT)
+	{
+		column = 0;
+		while (column < WIN_WIDTH)
+			put_pixel(img, column++, row, color);
+		++row;
+	}
 }
 
 void	put_point(t_display *display, t_point point)
@@ -32,9 +60,9 @@ void	put_point(t_display *display, t_point point)
 	while (i >= 0)
 	{
 		if (display->img.endian != 0)
-			*pixel++ = (point.color >> i) & 0xFF;
+			*pixel++ = (point.rgb >> i) & 0xFF;
 		else
-			*pixel++ = (point.color >> (display->img.bit_per_pixel
+			*pixel++ = (point.rgb >> (display->img.bit_per_pixel
 						- 8 - i)) & 0xFF;
 		i -= 8;
 	}
@@ -73,37 +101,4 @@ int	render(t_display *display)
 		display->img.mlx_img, 0, 0);
 	fprintf(stderr, "new render\n");
 	return (0);
-}
-
-void	put_pixel(t_image *img, int x, int y, int color)
-{
-	char	*pixel;
-	int		i;
-
-	i = img->bit_per_pixel - 8;
-	pixel = img->address + (y * img->line_len + x
-			* (img->bit_per_pixel / 8));
-	while (i >= 0)
-	{
-		if (img->endian != 0)
-			*pixel++ = (color >> i) & 0xFF;
-		else
-			*pixel++ = (color >> (img->bit_per_pixel - 8 - i)) & 0xFF;
-		i -= 8;
-	}
-}
-
-void	paint_background(t_image *img, int color)
-{
-	int	row;
-	int	column;
-
-	row = 0;
-	while (row < WIN_HEIGHT)
-	{
-		column = 0;
-		while (column < WIN_WIDTH)
-			put_pixel(img, column++, row, color);
-		++row;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/23 13:19:38 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/24 10:38:24 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,27 @@ int	handle_input(int keysym, t_display *display)
 	if (keysym == XK_r)
 	{
 		display->alpha += 0.05;
-		rotate_z_axis(display);
+		rotate(display, display->alpha, 'x');
 	}
 	if (keysym == XK_p)
 	{
 		display->gamma += 0.05;
-		rotate_x_axis(display);
+		rotate(display, display->gamma, 'x');
+	}
+	if (keysym == XK_P)
+	{
+		display->gamma -= 0.05;
+		rotate(display, display->gamma, 'x');
 	}
 	if (keysym == XK_t)
 	{
 		display->tetha += 0.05;
-		rotate_y_axis(display);
+		rotate(display, display->tetha, 'x');
+	}
+	if (keysym == XK_T)
+	{
+		display->tetha -= 0.05;
+		rotate(display, display->tetha, 'x');
 	}
 	if (keysym == XK_a)
 	{
