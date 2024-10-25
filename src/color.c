@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 17:19:15 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/25 11:04:11 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,27 +127,32 @@ void	extract_color(t_point *point, char *hexacode)
 	else
 		point->rgb = ft_atoi_base(hexacode, SMOLHEXADEC);
 	set_hsv(point);
-	fprintf(stderr, "point (%d, %d, %d) has color %#x (h: %f, s: %f, v: %f)\n",
-		point->x, point->y, point->z, point->rgb, point->hsv.hue,
-		point->hsv.saturation, point->hsv.value);
-	fprintf(stderr, "and back to rgb %#X\n", hsv_to_rgb(point->hsv));
+	// fprintf(stderr, "point (%d, %d, %d) has color %#x (h: %f, s: %f, v: %f)\n",
+	// 	point->x, point->y, point->z, point->rgb, point->hsv.hue,
+	// 	point->hsv.saturation, point->hsv.value);
+	// fprintf(stderr, "and back to rgb %#X\n", hsv_to_rgb(point->hsv));
 }
 
 int		interpolate_rgb_gradient(t_line *line, t_point *current)
 {
-	float	ratio;
+	float	progress;
 	t_byte	red;
 	t_byte	green;
 	t_byte	blue;
 
-	if (line.start->x == line.end.x && start->y == end->y)
-		ratio = 0.0;
+	if (current->x == line->start.x && current->y == line->start.y)
+		progress = 0.0;
 	else
-	{
-
-	}
+		progress = calculate_line_length(line->start, line->current)
+			/ line->length;
+	red = get_red(line->start.rgb);
+	green = get_green(line->start.rgb);
+	blue = get_blue(line->start.rgb);
+	red = red + (get_red(line->end.rgb) - red) * progress;
+	green = green + (get_green(line->end.rgb) - green) * progress;
+	blue = blue + (get_blue(line->end.rgb) - blue) * progress;
+	return (encode_rgb(red, green, blue));
 }
-
 
 /* DEBUG PRINTS */
 /*

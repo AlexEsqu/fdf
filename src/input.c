@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 10:38:24 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/25 11:15:43 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,40 @@ int	handle_mouse(int button, int x, int y, t_display *display)
 	}
 	fprintf(stderr, "clicked on %d, %d", x, y);
 	return (0);
+}
+
+void rotations(int keysym, t_display *display)
+{
+	if (keysym == XK_r)
+	{
+		display->alpha += 0.05;
+		rotate(display, display->alpha, 'x');
+	}
+	// if (keysym == XK_R)
+	// {
+	// 	display->alpha += 0.05;
+	// 	rotate(display, display->alpha, 'x');
+	// }
+	if (keysym == XK_p)
+	{
+		display->gamma += 0.05;
+		rotate(display, display->gamma, 'z');
+	}
+	// if (keysym == XK_P)
+	// {
+	// 	display->gamma -= 0.05;
+	// 	rotate(display, display->gamma, 'z');
+	// }
+	if (keysym == XK_t)
+	{
+		display->tetha += 0.05;
+		rotate(display, display->tetha, 'y');
+	}
+	// if (keysym == XK_T)
+	// {
+	// 	display->tetha -= 0.05;
+	// 	rotate(display, display->tetha, 'y');
+	// }
 }
 
 int	handle_input(int keysym, t_display *display)
@@ -39,31 +73,6 @@ int	handle_input(int keysym, t_display *display)
 	{
 		display->zoom -= 1;
 		render(display);
-	}
-	if (keysym == XK_r)
-	{
-		display->alpha += 0.05;
-		rotate(display, display->alpha, 'x');
-	}
-	if (keysym == XK_p)
-	{
-		display->gamma += 0.05;
-		rotate(display, display->gamma, 'x');
-	}
-	if (keysym == XK_P)
-	{
-		display->gamma -= 0.05;
-		rotate(display, display->gamma, 'x');
-	}
-	if (keysym == XK_t)
-	{
-		display->tetha += 0.05;
-		rotate(display, display->tetha, 'x');
-	}
-	if (keysym == XK_T)
-	{
-		display->tetha -= 0.05;
-		rotate(display, display->tetha, 'x');
 	}
 	if (keysym == XK_a)
 	{

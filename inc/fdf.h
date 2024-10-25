@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 17:30:55 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/25 10:28:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,11 @@ t_point	isometrify(t_point point);
 /* COLORING */
 
 void	extract_color(t_point *point, char *hexacode);
+int		interpolate_rgb_gradient(t_line *line, t_point *current);
 
 /* PLOTTING */
 void	plot_line(t_point origin, t_point end, t_display *display);
+float	calculate_line_length(t_point start, t_point end);
 
 /* PARSING */
 void	parse_file_into_grid(char *map_filepath, t_display *display);

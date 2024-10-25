@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 17:34:26 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/25 10:56:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,12 @@ float	calculate_line_length(t_point start, t_point end)
 			+ (end.y - start.y) * (end.y - start.y)));
 }
 
-int	set_color_according_to_progress(t_line *line)
-{
-	float	progress;
-
-	progress = calculate_line_length(line->start, line->current) / line->length;
-
-}
-
 void	print_line(t_line *line, t_display *display)
 {
 	line->current = line->start;
 	while (1)
 	{
-		set_color_according_to_progress(line);
+		line->current.rgb = interpolate_rgb_gradient(line, &line->current);
 		put_point(display, line->current);
 		line->error2 = 2 * line->error;
 		if (line->error2 >= line->delta.y)
@@ -68,7 +60,7 @@ void	plot_line(t_point start, t_point end, t_display *display)
 	if (line.start.y > line.end.y)
 		line.sign.y = -1;
 	line.error = line.delta.x + line.delta.y;
-	line.length = calculate_line_length(start, end);
+	line.length = calculate_line_length(line.start, line.end);
 	print_line(&line, display);
 }
 
