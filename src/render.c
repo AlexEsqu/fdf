@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 22:34:57 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 23:53:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	print_grid(t_display *display)
 	t_grid	*grid;
 
 	grid = display->grid;
-	index = grid->pts_count - 1;
-	while (index > 0)
+	index = 0;
+	assign_color(display);
+	while (index < grid->pts_count)
 	{
-		assign_color(display, &grid->pts_array[index]);
 		if (index % grid->width != 0)
 		{
 			plot_line(grid->pts_array[index - 1],
@@ -87,7 +87,7 @@ void	print_grid(t_display *display)
 			plot_line(grid->pts_array[index - grid->width],
 				grid->pts_array[index], display);
 		}
-		index--;
+		index++;
 	}
 }
 

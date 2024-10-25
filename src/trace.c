@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 22:08:23 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 23:28:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	print_line(t_line *line, t_display *display)
 	line->current = line->start;
 	while (1)
 	{
-		line->current.rgb = interpolate_rgb_gradient(line, &line->current);
+		line->current.rgb = interpolate_rgb_gradient(line->start.rgb, line->end.rgb,
+				calculate_progress(line, &line->current));
 		put_point(display, line->current);
 		line->error2 = 2 * line->error;
 		if (line->error2 >= line->delta.y)

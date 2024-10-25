@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 22:37:26 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 23:47:52 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,35 +133,37 @@ void	extract_color(t_point *point, char *hexacode)
 	// fprintf(stderr, "and back to rgb %#X\n", hsv_to_rgb(point->hsv));
 }
 
-int		interpolate_rgb_gradient(t_line *line, t_point *current)
+int		interpolate_rgb_gradient(int start_rgb, int end_rgb, float progress)
 {
-	float	progress;
 	t_byte	red;
 	t_byte	green;
 	t_byte	blue;
 
-	progress = calculate_progress(line, current);
-	red = get_red(line->start.rgb);
-	green = get_green(line->start.rgb);
-	blue = get_blue(line->start.rgb);
-	red = red + (get_red(line->end.rgb) - red) * progress;
-	green = green + (get_green(line->end.rgb) - green) * progress;
-	blue = blue + (get_blue(line->end.rgb) - blue) * progress;
+	red = get_red(start_rgb);
+	green = get_green(start_rgb);
+	blue = get_blue(start_rgb);
+	red = red + (get_red(end_rgb) - red) * progress;
+	green = green + (get_green(end_rgb) - green) * progress;
+	blue = blue + (get_blue(end_rgb) - blue) * progress;
 	return (encode_rgb(red, green, blue));
 }
 
-void	assign_color(t_display *display, t_point *point)
+void	assign_color(t_display *display)
 {
-	t_byte	red;
-	t_byte	green;
-	t_byte	blue;
+	int		index;
+	float	increment;
 
 	if (!display->color_mode)
 		return ;
-	red = (point->x * display->grid->width);
-	blue = 0;
-	green = 0;
-	point->rgb = encode_rgb(red, green, blue);
+	index = 0;
+	increment = 1 / (float)(display->grid->pts_count - 1);
+	while (index < display->grid->pts_count)
+	{
+		printf("increment = %f\n", increment);
+		display->grid->pts_array[index].rgb =
+			interpolate_rgb_gradient(0x070000, 0x00ff60, index * increment);
+		index++;
+	}
 }
 
 
