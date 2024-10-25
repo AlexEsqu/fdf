@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 11:04:11 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 22:37:26 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,7 @@ int		interpolate_rgb_gradient(t_line *line, t_point *current)
 	t_byte	green;
 	t_byte	blue;
 
-	if (current->x == line->start.x && current->y == line->start.y)
-		progress = 0.0;
-	else
-		progress = calculate_line_length(line->start, line->current)
-			/ line->length;
+	progress = calculate_progress(line, current);
 	red = get_red(line->start.rgb);
 	green = get_green(line->start.rgb);
 	blue = get_blue(line->start.rgb);
@@ -153,6 +149,21 @@ int		interpolate_rgb_gradient(t_line *line, t_point *current)
 	blue = blue + (get_blue(line->end.rgb) - blue) * progress;
 	return (encode_rgb(red, green, blue));
 }
+
+void	assign_color(t_display *display, t_point *point)
+{
+	t_byte	red;
+	t_byte	green;
+	t_byte	blue;
+
+	if (!display->color_mode)
+		return ;
+	red = (point->x * display->grid->width);
+	blue = 0;
+	green = 0;
+	point->rgb = encode_rgb(red, green, blue);
+}
+
 
 /* DEBUG PRINTS */
 /*

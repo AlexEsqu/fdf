@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 16:49:19 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/25 22:34:57 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	put_point(t_display *display, t_point point)
 	char	*pixel;
 	int		i;
 
-	// fprintf(stderr, "point (%d, %d, %d, color : %x)\n", point.x, point.y, point.z, point.color);
 	if (point.x < 0 || point.y < 0
 		|| point.x > WIN_WIDTH || point.y > WIN_HEIGHT)
 		return ;
@@ -77,6 +76,7 @@ void	print_grid(t_display *display)
 	index = grid->pts_count - 1;
 	while (index > 0)
 	{
+		assign_color(display, &grid->pts_array[index]);
 		if (index % grid->width != 0)
 		{
 			plot_line(grid->pts_array[index - 1],

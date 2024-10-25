@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 11:15:43 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 22:36:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	handle_mouse(int button, int x, int y, t_display *display)
 		wipe(display);
 		exit(0);
 	}
-	fprintf(stderr, "clicked on %d, %d", x, y);
+	// fprintf(stderr, "clicked on %d, %d", x, y);
 	return (0);
 }
 
@@ -96,6 +96,11 @@ int	handle_input(int keysym, t_display *display)
 	{
 		display->offset_x -= 10;
 		display->offset_y -= 10;
+		render(display);
+	}
+	if (keysym == XK_c)
+	{
+		display->color_mode = !display->color_mode;
 		render(display);
 	}
 	printf("Keypress: %d\n", keysym);

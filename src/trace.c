@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 10:56:38 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/25 22:08:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ float	calculate_line_length(t_point start, t_point end)
 {
 	return (sqrtf((end.x - start.x) * (end.x - start.x)
 			+ (end.y - start.y) * (end.y - start.y)));
+}
+
+float	calculate_progress(t_line *line, t_point *current)
+{
+	float	progress;
+
+	if (current->x == line->start.x && current->y == line->start.y)
+		progress = 0.0;
+	else
+		progress = calculate_line_length(line->start, line->current)
+			/ line->length;
+	return (progress);
 }
 
 void	print_line(t_line *line, t_display *display)
