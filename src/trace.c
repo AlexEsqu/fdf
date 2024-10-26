@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 12:40:15 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:44:52 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	plot_line(t_point start, t_point end, t_display *display)
 
 	line.start = apply_zoom_and_offset(&start, display);
 	line.end = apply_zoom_and_offset(&end, display);
-	// line.start = isometrify(line.start);
-	// line.end = isometrify(line.end);
 	line.sign.x = 1.0;
 	line.sign.y = 1.0;
 	line.delta.x = ft_abs(line.end.x - line.start.x);

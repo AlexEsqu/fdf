@@ -6,72 +6,11 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:54:19 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:11:31 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:22:39 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
-
-/* Put the origin of the vector at center of grid */
-void	subtract_grid_center(t_point *point, t_display *display)
-{
-	point->x = point->x - (display->world->width) / 2;
-	point->y = point->y - (display->world->height) / 2;
-}
-
-void	add_grid_center(t_point *point, t_display *display)
-{
-	point->x = point->x + (display->world->width) / 2;
-	point->y = point->y + (display->world->height) / 2;
-}
-
-void	scale(t_point *point, t_display *display)
-{
-	point->x = display->unit * point->x;
-	point->y = display->unit * point->y;
-}
-
-void	zoom(t_point *point, t_display *display)
-{
-	point->x *= display->zoom;
-	point->y *= display->zoom;
-	point->z *= display->zoom;
-}
-
-void	center(t_point *point, t_display *display)
-{
-	point->x += display->offset_x;
-	point->y += display->offset_y;
-}
-/*
-For point x and y ;
-For x_m the middle of the grid width and y_m the middle of the grid height ;
-For a the zoom factor ;
-For W the width of the window and H the height of the window ;
-(a(i - x_m)+ W/2, a(j - y_m) + H /2)
-*/
-t_point	apply_zoom_and_offset(t_point *point, t_display *display)
-{
-	subtract_grid_center(point, display);
-	scale(point, display);
-	zoom(point, display);
-	center(point, display);
-	return (*point);
-}
-
-void	isometrify(t_display *display)
-{
-	display->angle_x_axis = 45 * PI_BY_180;
-	display->angle_y_axis = 35.264 * PI_BY_180;
-	display->angle_z_axis = 0;
-}
-
-void	flatten(t_display *display)
-{
-	display->angle_x_axis = 0;
-	display->angle_y_axis = 0;
-	display->angle_z_axis = 0;
-}
 
 /*
 Generate a rotation matrix on the x axis such as
@@ -184,5 +123,3 @@ void	rotate(t_display *display)
 		index--;
 	}
 }
-
-

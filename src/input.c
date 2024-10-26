@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:14:00 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:38:59 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	rotations(int keysym, t_display *display)
 	if (keysym == XK_y)
 		isometrify(display);
 	if (keysym == XK_o)
-		flatten(display);
+		top_view(display);
+	if (keysym == XK_l)
+		front_view(display);
+	if (keysym == XK_p)
+		right_view(display);
 	if (keysym == XK_r)
 		display->angle_x_axis += 0.05;
 	if (keysym == XK_f)
