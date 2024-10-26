@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:54:19 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:22:39 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 22:10:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,17 @@ void	rotate(t_display *display)
 	float	matrix_y[3][3];
 	float	matrix_z[3][3];
 
-	index = display->world->pts_count - 1;
+	index = 0;
 	generate_rotation_matrix_x(display->angle_x_axis, matrix_x);
 	generate_rotation_matrix_y(display->angle_y_axis, matrix_y);
 	generate_rotation_matrix_z(display->angle_z_axis, matrix_z);
-	while (index >= 0)
+	while (index < display->world->pts_count)
 	{
 		subtract_grid_center(&display->world->pts_array[index], display);
 		multiply_by_matrix(&display->world->pts_array[index], matrix_x);
 		multiply_by_matrix(&display->world->pts_array[index], matrix_y);
 		multiply_by_matrix(&display->world->pts_array[index], matrix_z);
 		add_grid_center(&display->world->pts_array[index], display);
-		index--;
+		index++;
 	}
 }

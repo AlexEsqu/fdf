@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 15:49:20 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 22:15:17 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	render(t_display *display)
 	paint_background(&display->img, BLACK);
 	if (display->color_mode)
 		assign_color(display);
+	add_elevation(display);
 	rotate(display);
 	print_grid(display->world, display);
 	mlx_put_image_to_window(display->link, display->window,

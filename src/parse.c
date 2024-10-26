@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:11:31 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 23:09:00 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	reinitialize_world_grid(t_display *display)
 	index = 0;
 	while (index < display->local->pts_count)
 	{
-		display->world->pts_array[index] =
-			display->local->pts_array[index];
+		display->world->pts_array[index]
+			= display->local->pts_array[index];
 		index++;
 	}
 }
@@ -126,15 +126,16 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	display->offset_x = WIN_WIDTH / 2;
 	display->offset_y = WIN_HEIGHT / 2;
 	display->unit = 1;
-	display->zoom = 10;
+	display->zoom = 10.0;
 	display->angle_x_axis = 0;
 	display->angle_y_axis = 0;
 	display->angle_z_axis = 0;
+	display->elevation = 1.0;
 	display->color_mode = true;
 	display->local->pts_array = ft_calloc((display->local->height
-			* display->local->width), sizeof(t_point));
+				* display->local->width), sizeof(t_point));
 	display->world->pts_array = ft_calloc((display->local->height
-			* display->local->width), sizeof(t_point));
+				* display->local->width), sizeof(t_point));
 	fd = open_file(map_filepath, display);
 	line = get_next_line(fd);
 	while (line)

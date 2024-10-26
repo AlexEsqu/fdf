@@ -6,21 +6,18 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:38:59 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 23:16:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-int	handle_mouse(int button, int x, int y, t_display *display)
+void	zoom(int button_or_key, t_display *display)
 {
-	if (button == 1 && x > WIN_WIDTH - 20 && y < 100)
-	{
-		wipe(display);
-		exit(0);
-	}
-	// fprintf(stderr, "clicked on %d, %d", x, y);
-	return (0);
+	if (button_or_key == WHEEL_UP || button_or_key == XK_Up)
+		display->zoom *= 1.1;
+	else
+		display->zoom *= 0.9;
 }
 
 void	rotations(int keysym, t_display *display)
@@ -48,6 +45,14 @@ void	rotations(int keysym, t_display *display)
 	render(display);
 }
 
+int	handle_mouse(int button, int x, int y, t_display *display)
+{
+	if (button == WHEEL_UP || button == WHEEL_DOWN)
+		zoom(button, display);
+	render(display);
+	return (0);
+}
+
 int	handle_input(int keysym, t_display *display)
 {
 	rotations(keysym, display);
@@ -57,9 +62,9 @@ int	handle_input(int keysym, t_display *display)
 		exit(0);
 	}
 	if (keysym == XK_Up)
-		display->zoom += 1;
+		zoom(keysym, display);
 	if (keysym == XK_Down)
-		display->zoom -= 1;
+		zoom(keysym, display);
 	if (keysym == XK_a)
 		display->offset_x -= 10;
 	if (keysym == XK_d)
@@ -70,6 +75,10 @@ int	handle_input(int keysym, t_display *display)
 		display->offset_y -= 10;
 	if (keysym == XK_c)
 		display->color_mode = !display->color_mode;
+	if (keysym ==  XK_u)
+		display->elevation += 0.2;
+	if (keysym ==  XK_j)
+		display->elevation -= 0.2;
 	render(display);
 	return (0);
 }

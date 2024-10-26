@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 17:01:45 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 23:06:55 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
 # define ACCEPT_CHAR	"abcdefABCDEF0123456789,x-+ "
 # define BLACK			0x000000
 # define WHITE			0xffffff
-# define PI				3.14159265358979323846
-# define PI_BY_FOUR		0.78539816339
-# define PI_BY_SIX		0.52359877559
-# define PI_BY_180		0.01745329251
+# define PI				3.1415926535
+# define PI_BY_FOUR		0.7853981633
+# define PI_BY_SIX		0.5235987755
+# define PI_BY_180		0.0174532925
 # define ARCTAN			0.955316618
 
 typedef unsigned char	t_byte;
@@ -44,6 +44,14 @@ enum	e_error
 {
 	SUCCESS = 0,
 	MALLOC_ERR = 1,
+};
+
+enum	e_mouse
+{
+	RIGHT_CLICK = 1,
+	LEFT_CLICK = 3,
+	WHEEL_UP = 4,
+	WHEEL_DOWN = 5,
 };
 
 typedef struct s_hsv
@@ -106,8 +114,9 @@ typedef struct s_display
 	void	*window;
 	int		offset_x;
 	int		offset_y;
-	int		zoom;
 	int		unit;
+	float	elevation;
+	float	zoom;
 	bool	color_mode;
 	float	angle_y_axis;
 	float	angle_x_axis;
@@ -151,6 +160,7 @@ void		plot_line(t_point origin, t_point end, t_display *display);
 float		calculate_line_length(t_point start, t_point end);
 void		subtract_grid_center(t_point *point, t_display *display);
 void		add_grid_center(t_point *point, t_display *display);
+void		add_elevation(t_display *display);
 t_point		apply_zoom_and_offset(t_point *point, t_display *display);
 
 /* PARSING */
@@ -168,6 +178,5 @@ void		right_view(t_display *display);
 /* ERRORS */
 
 void		exit_if(bool condition, char *error_message, t_display *display);
-
 
 #endif
