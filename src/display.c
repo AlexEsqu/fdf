@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/24 11:34:34 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/26 14:46:08 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-void	free_point_array(t_grid	*grid)
+void	free_grid(t_grid *grid)
 {
 	free(grid->pts_array);
 	free(grid);
@@ -24,7 +24,8 @@ void	wipe(t_display *display)
 	{
 		if (display->img.mlx_img)
 			mlx_destroy_image(display->link, display->img.mlx_img);
-		free_point_array(display->grid);
+		free_grid(display->local);
+		free_grid(display->world);
 		mlx_destroy_window(display->link, display->window);
 		mlx_destroy_display(display->link);
 		free(display->link);

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 12:24:40 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 15:49:20 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,11 @@ void	put_point(t_display *display, t_point point)
 	}
 }
 
-void	print_grid(t_display *display)
+void	print_grid(t_grid *grid, t_display *display)
 {
 	int		index;
-	t_grid	*grid;
 
-	grid = display->grid;
 	index = 0;
-	assign_color(display);
 	while (index < grid->pts_count)
 	{
 		if (index % grid->width != 0)
@@ -96,10 +93,14 @@ int	render(t_display *display)
 	if (display->window == NULL)
 		return (1);
 	paint_background(&display->img, BLACK);
-	print_grid(display);
+	if (display->color_mode)
+		assign_color(display);
+	rotate(display);
+	print_grid(display->world, display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
-	printf("new render\n");
+	// printf("new render\n");
+	reinitialize_world_grid(display);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 13:23:34 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:11:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	check_syntax(char *line, t_display *display)
 	}
 }
 
-void	check_grid_size_syntax(char *map_filepath, t_grid *grid,
-	t_display *display)
+void	check_grid_size_syntax(char *map_filepath, t_display *display)
 {
 	int		fd;
 	int		line_count;
@@ -47,7 +46,9 @@ void	check_grid_size_syntax(char *map_filepath, t_grid *grid,
 	fd = open_file(map_filepath, display);
 	line_count = 0;
 	line = get_next_line(fd);
-	grid->width = countword(line, ' ');
+	display->local->width = countword(line, ' ');
+	exit_if(display->local->width == 0, "Grid width is 0\n", display);
+	display->world->width = display->local->width;
 	while (line != NULL)
 	{
 		line_count++;
@@ -56,8 +57,10 @@ void	check_grid_size_syntax(char *map_filepath, t_grid *grid,
 		line = get_next_line(fd);
 	}
 	close(fd);
-	grid->pts_count = 0;
-	grid->height = line_count;
+	display->local->pts_count = 0;
+	display->local->height = line_count;
+	exit_if(display->local->height == 0, "Grid height is 0\n", display);
+	display->world->height = display->local->height;
 }
 
 t_point	turn_into_pts(char *map_point, t_display *display)
@@ -65,8 +68,8 @@ t_point	turn_into_pts(char *map_point, t_display *display)
 	t_point	point;
 	char	**values;
 
-	point.y = display->grid->pts_count / display->grid->width;
-	point.x = display->grid->pts_count % display->grid->width;
+	point.y = display->local->pts_count / display->local->width;
+	point.x = fmod(display->local->pts_count, display->local->width);
 	if (ft_strchr(map_point, ',') == 0)
 	{
 		point.z = ft_atoi(map_point);
@@ -86,16 +89,30 @@ void	split_line_into_pts(char *line, t_display *display)
 	int		index;
 
 	split_line = ft_split(line, ' ');
-	exit_if((split_line == NULL), "malloc error", display);
+	exit_if((split_line == NULL), "malloc error\n", display);
 	index = 0;
 	while (split_line[index])
 	{
-		display->grid->pts_array[display->grid->pts_count]
+		display->local->pts_array[display->local->pts_count]
 			= turn_into_pts(split_line[index], display);
-		display->grid->pts_count++;
+		display->local->pts_count++;
 		index++;
 	}
+	display->world->pts_count = display->local->pts_count;
 	ft_free_tab(split_line);
+}
+
+void	reinitialize_world_grid(t_display *display)
+{
+	int	index;
+
+	index = 0;
+	while (index < display->local->pts_count)
+	{
+		display->world->pts_array[index] =
+			display->local->pts_array[index];
+		index++;
+	}
 }
 
 void	parse_file_into_grid(char *map_filepath, t_display *display)
@@ -103,19 +120,22 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	int		fd;
 	char	*line;
 
+	display->local = ft_calloc(1, sizeof(t_grid));
+	display->world = ft_calloc(1, sizeof(t_grid));
+	check_grid_size_syntax(map_filepath, display);
 	display->offset_x = WIN_WIDTH / 2;
 	display->offset_y = WIN_HEIGHT / 2;
 	display->unit = 1;
 	display->zoom = 10;
-	display->alpha = 0;
-	display->tetha = 0;
-	display->gamma = 0;
+	display->angle_x_axis = 0;
+	display->angle_y_axis = 0;
+	display->angle_z_axis = 0;
 	display->color_mode = true;
-	display->grid = ft_calloc(1, sizeof(t_grid));
-	check_grid_size_syntax(map_filepath, display->grid, display);
+	display->local->pts_array = ft_calloc((display->local->height
+			* display->local->width), sizeof(t_point));
+	display->world->pts_array = ft_calloc((display->local->height
+			* display->local->width), sizeof(t_point));
 	fd = open_file(map_filepath, display);
-	display->grid->pts_array = ft_calloc((display->grid->height
-				* display->grid->width), sizeof(t_point));
 	line = get_next_line(fd);
 	while (line)
 	{

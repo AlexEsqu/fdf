@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:54:19 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 13:44:00 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 16:11:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 /* Put the origin of the vector at center of grid */
 void	subtract_grid_center(t_point *point, t_display *display)
 {
-	point->x = point->x - (display->grid->width) / 2;
-	point->y = point->y - (display->grid->height) / 2;
+	point->x = point->x - (display->world->width) / 2;
+	point->y = point->y - (display->world->height) / 2;
 }
 
 void	add_grid_center(t_point *point, t_display *display)
 {
-	point->x = point->x + (display->grid->width) / 2;
-	point->y = point->y + (display->grid->height) / 2;
+	point->x = point->x + (display->world->width) / 2;
+	point->y = point->y + (display->world->height) / 2;
 }
 
 void	scale(t_point *point, t_display *display)
@@ -61,18 +61,16 @@ t_point	apply_zoom_and_offset(t_point *point, t_display *display)
 
 void	isometrify(t_display *display)
 {
-	display->alpha = 45 * PI_BY_180;
-	display->tetha = 35.264 * PI_BY_180;
-	rotate(display, display->alpha, 'x');
-	rotate(display, display->tetha, 'y');
+	display->angle_x_axis = 45 * PI_BY_180;
+	display->angle_y_axis = 35.264 * PI_BY_180;
+	display->angle_z_axis = 0;
 }
 
 void	flatten(t_display *display)
 {
-	display->alpha = 0;
-	display->tetha = 0;
-	rotate(display, display->alpha, 'x');
-	rotate(display, display->tetha, 'y');
+	display->angle_x_axis = 0;
+	display->angle_y_axis = 0;
+	display->angle_z_axis = 0;
 }
 
 /*
@@ -165,25 +163,24 @@ void	multiply_by_matrix(t_point *point, float matrix[3][3])
 	point->z = result.z;
 }
 
-void	rotate(t_display *display, float angle, char axis)
+void	rotate(t_display *display)
 {
 	int		index;
-	float	matrix[3][3];
-	t_grid	*grid;
+	float	matrix_x[3][3];
+	float	matrix_y[3][3];
+	float	matrix_z[3][3];
 
-	grid = display->grid;
-	index = grid->pts_count - 1;
-	if (axis == 'x')
-		generate_rotation_matrix_x(angle, matrix);
-	else if (axis == 'y')
-		generate_rotation_matrix_y(angle, matrix);
-	else
-		generate_rotation_matrix_z(angle, matrix);
+	index = display->world->pts_count - 1;
+	generate_rotation_matrix_x(display->angle_x_axis, matrix_x);
+	generate_rotation_matrix_y(display->angle_y_axis, matrix_y);
+	generate_rotation_matrix_z(display->angle_z_axis, matrix_z);
 	while (index >= 0)
 	{
-		subtract_grid_center(&grid->pts_array[index], display);
-		multiply_by_matrix(&grid->pts_array[index], matrix);
-		add_grid_center(&grid->pts_array[index], display);
+		subtract_grid_center(&display->world->pts_array[index], display);
+		multiply_by_matrix(&display->world->pts_array[index], matrix_x);
+		multiply_by_matrix(&display->world->pts_array[index], matrix_y);
+		multiply_by_matrix(&display->world->pts_array[index], matrix_z);
+		add_grid_center(&display->world->pts_array[index], display);
 		index--;
 	}
 }

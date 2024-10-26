@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 11:14:57 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 14:30:56 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,10 @@ void	assign_color(t_display *display)
 	if (!display->color_mode)
 		return ;
 	index = 0;
-	increment = 1 / (float)(display->grid->pts_count - 1);
-	while (index < display->grid->pts_count)
+	increment = 1 / (float)(display->world->pts_count - 1);
+	while (index < display->world->pts_count)
 	{
-		display->grid->pts_array[index].rgb =
+		display->world->pts_array[index].rgb =
 			interpolate_rgb_gradient(0x070000, 0x00ff60, index * increment);
 		index++;
 	}
