@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 22:36:06 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 13:50:17 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,42 +23,52 @@ int	handle_mouse(int button, int x, int y, t_display *display)
 	return (0);
 }
 
-void rotations(int keysym, t_display *display)
+void	rotations(int keysym, t_display *display)
 {
+	if (keysym == XK_y)
+	{
+		isometrify(display);
+	}
+	if (keysym == XK_Y)
+	{
+		flatten(display);
+	}
 	if (keysym == XK_r)
 	{
-		display->alpha += 0.05;
+		display->alpha += 0.01;
 		rotate(display, display->alpha, 'x');
 	}
-	// if (keysym == XK_R)
-	// {
-	// 	display->alpha += 0.05;
-	// 	rotate(display, display->alpha, 'x');
-	// }
+	if (keysym == XK_R)
+	{
+		display->alpha += 0.01;
+		rotate(display, display->alpha, 'x');
+	}
 	if (keysym == XK_p)
 	{
-		display->gamma += 0.05;
+		display->gamma += 0.01;
 		rotate(display, display->gamma, 'z');
 	}
-	// if (keysym == XK_P)
-	// {
-	// 	display->gamma -= 0.05;
-	// 	rotate(display, display->gamma, 'z');
-	// }
+	if (keysym == XK_P)
+	{
+		display->gamma -= 0.01;
+		rotate(display, display->gamma, 'z');
+	}
 	if (keysym == XK_t)
 	{
-		display->tetha += 0.05;
+		display->tetha += 0.01;
 		rotate(display, display->tetha, 'y');
 	}
-	// if (keysym == XK_T)
-	// {
-	// 	display->tetha -= 0.05;
-	// 	rotate(display, display->tetha, 'y');
-	// }
+	if (keysym == XK_T)
+	{
+		display->tetha -= 0.01;
+		rotate(display, display->tetha, 'y');
+	}
+	render(display);
 }
 
 int	handle_input(int keysym, t_display *display)
 {
+	rotations(keysym, display);
 	if (keysym == XK_Escape)
 	{
 		wipe(display);

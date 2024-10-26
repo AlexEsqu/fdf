@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 23:47:52 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 11:14:57 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	assign_color(t_display *display)
 	increment = 1 / (float)(display->grid->pts_count - 1);
 	while (index < display->grid->pts_count)
 	{
-		printf("increment = %f\n", increment);
 		display->grid->pts_array[index].rgb =
 			interpolate_rgb_gradient(0x070000, 0x00ff60, index * increment);
 		index++;

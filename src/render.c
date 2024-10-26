@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 23:53:10 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 12:24:40 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	put_point(t_display *display, t_point point)
 		|| point.x > WIN_WIDTH || point.y > WIN_HEIGHT)
 		return ;
 	i = display->img.bit_per_pixel - 8;
-	pixel = display->img.address + (point.y * display->img.line_len
-			+ point.x * (display->img.bit_per_pixel / 8));
+	pixel = display->img.address + ((int)point.y * display->img.line_len
+			+ (int)point.x * (display->img.bit_per_pixel / 8));
 	while (i >= 0)
 	{
 		if (display->img.endian != 0)
@@ -99,6 +99,11 @@ int	render(t_display *display)
 	print_grid(display);
 	mlx_put_image_to_window(display->link, display->window,
 		display->img.mlx_img, 0, 0);
-	fprintf(stderr, "new render\n");
+	printf("new render\n");
 	return (0);
 }
+
+/*
+printf("first pixel = %f, %f, %f\n", display->grid->pts_array[1].x,
+		display->grid->pts_array[1].y, display->grid->pts_array[1].z);
+*/

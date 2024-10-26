@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/25 10:28:51 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/26 13:56:05 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ enum	e_error
 	MALLOC_ERR = 1,
 };
 
-typedef	struct s_hsv
+typedef struct s_hsv
 {
 	int		alpha;
 	float	hue;
@@ -53,7 +53,7 @@ typedef	struct s_hsv
 	float	value;
 }	t_hsv;
 
-typedef	struct s_rgb
+typedef struct s_rgb
 {
 	int		alpha;
 	float	red;
@@ -63,11 +63,9 @@ typedef	struct s_rgb
 
 typedef struct s_point
 {
-	int		x;
-	int		y;
-	int		z;
-	int		dy;
-	int		dx;
+	float	x;
+	float	y;
+	float	z;
 	int		rgb;
 	t_hsv	hsv;
 }	t_point;
@@ -109,6 +107,7 @@ typedef struct s_display
 	int		offset_y;
 	int		zoom;
 	int		unit;
+	bool	color_mode;
 	float	tetha;
 	float	alpha;
 	float	gamma;
@@ -125,18 +124,16 @@ int			handle_mouse(int button, int x, int y, t_display *display);
 int			success_exit(t_display *display);
 
 /* PAINTING */
-
 void	put_pixel(t_image *image, int x, int y, int color);
 void	put_point(t_display *display, t_point point);
 void	paint_background(t_image *image, int color);
 int		render(t_display *display);
 t_point	apply_zoom_and_offset(t_point *point, t_display *display);
-t_point	isometrify(t_point point);
 
 /* COLORING */
-
 void	extract_color(t_point *point, char *hexacode);
-int		interpolate_rgb_gradient(t_line *line, t_point *current);
+int		interpolate_rgb_gradient(int start_rgb, int end_rgb, float progress);
+void	assign_color(t_display *display);
 
 /* PLOTTING */
 void	plot_line(t_point origin, t_point end, t_display *display);
@@ -147,6 +144,12 @@ void	parse_file_into_grid(char *map_filepath, t_display *display);
 
 /* ROTATING */
 void	rotate(t_display *display, float angle, char axis);
+void	isometrify(t_display *display);
+void	flatten(t_display *display);
+
+/* CAMERA */
+
+
 
 /* ERRORS */
 void	exit_if(bool condition, char *error_message, t_display *display);
