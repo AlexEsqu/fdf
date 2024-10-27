@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:44:52 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 09:00:24 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,3 @@ void	plot_line(t_point start, t_point end, t_display *display)
 	line.length = calculate_line_length(line.start, line.end);
 	print_line(&line, display);
 }
-
-
-

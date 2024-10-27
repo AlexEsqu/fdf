@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:14:03 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 16:34:04 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 09:23:05 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ void	extract_color(t_point *point, char *hexacode)
 		point->rgb = ft_atoi_base(hexacode, HEXADECIMAL);
 	else
 		point->rgb = ft_atoi_base(hexacode, SMOLHEXADEC);
-	// set_hsv(point);
 }
-
 
 /* DEBUG PRINTS */
 /*
 fprintf(stderr, "point (%d, %d, %d) has color %#x (h: %d, s: %d, v: %d)\n",
 		point->x, point->y, point->z, point->rgb, point->hsv.hue,
-		point->hsv.saturation, point->hsv.value);
+		point->hsv.sat, point->hsv.value);
 */

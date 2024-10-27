@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 16:30:45 by alex              #+#    #+#             */
-/*   Updated: 2024/10/26 16:33:10 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 09:57:44 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,31 @@ __Saturation = delta / max value
 VALUE (%)
 Value = max value out of RED, GREEN or BLUE
 */
-void	set_hsv(t_point *point)
+t_hsv	rgb_to_hsv(float red, float blue, float green)
 {
-	float	red;
-	float	green;
-	float	blue;
 	float	delta;
+	t_hsv	result;
 
-	red = get_red(point->rgb) / 255.0;
-	green = get_green(point->rgb) / 255.0;
-	blue = get_blue(point->rgb) / 255.0;
-	point->hsv.value = fmaxf(red, fmaxf(green, blue));
-	delta = point->hsv.value - fminf(red, fminf(green, blue));
+	red = red / 255.0;
+	green = green / 255.0;
+	blue = blue / 255.0;
+	result.value = fmaxf(red, fmaxf(green, blue));
+	delta = result.value - fminf(red, fminf(green, blue));
 	if (delta == 0)
-		point->hsv.hue = 0;
-	else if (point->hsv.value == red)
-		point->hsv.hue = 60 * fmodf(((green - blue) / delta), 6);
-	else if (point->hsv.value == green)
-		point->hsv.hue = 60 * (((blue - red) / delta) + 2);
+		result.hue = 0;
+	else if (result.value == red)
+		result.hue = 60 * fmodf(((green - blue) / delta), 6);
+	else if (result.value == green)
+		result.hue = 60 * (((blue - red) / delta) + 2);
 	else
-		point->hsv.hue = 60 * (((red - green) / delta) + 4);
-	if (point->hsv.hue < 0)
-		point->hsv.hue += 360;
-	if (point->hsv.value == 0)
-		point->hsv.saturation = 0;
+		result.hue = 60 * (((red - green) / delta) + 4);
+	if (result.hue < 0)
+		result.hue += 360;
+	if (result.value == 0)
+		result.sat = 0;
 	else
-		point->hsv.saturation = delta / point->hsv.value;
+		result.sat = delta / result.value;
+	return (result);
 }
 
 /*Converts hsv values into an RGB integer
@@ -75,7 +74,7 @@ int	hsv_to_rgb(t_hsv hsv)
 	float	x;
 	float	m;
 
-	chroma = hsv.value * hsv.saturation;
+	chroma = hsv.value * hsv.sat;
 	x = chroma * (1 - fabsf(fmodf(hsv.hue / 60.0, 2) - 1));
 	m = hsv.value - chroma;
 	if (hsv.hue >= 0 && hsv.hue < 60)
@@ -113,20 +112,50 @@ int	interpolate_rgb_gradient(int start_rgb, int end_rgb, float progress)
 	return (encode_rgb(red, green, blue));
 }
 
+int	interpolate_hsv_gradient(int start_rgb, int end_rgb, float progress)
+{
+	t_hsv	start;
+	t_hsv	end;
+	t_hsv	result;
+
+	start = rgb_to_hsv((float)get_red(start_rgb),
+			(float)get_green(start_rgb),
+			(float)get_blue(start_rgb));
+	end = rgb_to_hsv((float)get_red(end_rgb),
+			(float)get_green(end_rgb),
+			(float)get_blue(end_rgb));
+	result.hue = start.hue + (end.hue - start.hue) * progress;
+	result.sat = start.sat + (end.sat - start.sat) * progress;
+	result.value = start.value + (end.value - start.value) * progress;
+	return (hsv_to_rgb(result));
+}
+
 void	assign_color(t_display *display)
 {
 	int		index;
 	float	increment;
+	int		gradient[10][2] = {
+		{WHITE, WHITE},
+		{MATRIX_START, MATRIX_END},
+		{SUNSET_START, SUNSET_END},
+		{OCEAN_START, OCEAN_END},
+		{PURPLE_START, PURPLE_END},
+		{FLAME_START, FLAME_END},
+		{COOL_START, COOL_END},
+		{EMERALD_START, EMERALD_END},
+		{SUNNY_START, SUNNY_END},
+		{AUTUMN_START, AUTUMN_END}
+	};
 
-	if (!display->color_mode)
+	if (display->color_mode == 0)
 		return ;
 	index = 0;
 	increment = 1 / (float)(display->world->pts_count - 1);
 	while (index < display->world->pts_count)
 	{
 		display->world->pts_array[index].rgb
-			= interpolate_rgb_gradient(0x070000, 0x00ff60,
-				index * increment);
+			= interpolate_rgb_gradient(gradient[display->color_mode][0],
+				gradient[display->color_mode][1], index * increment);
 		index++;
 	}
 }

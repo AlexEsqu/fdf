@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:19:45 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 23:09:00 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 09:54:34 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	parse_file_into_grid(char *map_filepath, t_display *display)
 	display->angle_y_axis = 0;
 	display->angle_z_axis = 0;
 	display->elevation = 1.0;
-	display->color_mode = true;
+	display->color_mode = 1;
 	display->local->pts_array = ft_calloc((display->local->height
 				* display->local->width), sizeof(t_point));
 	display->world->pts_array = ft_calloc((display->local->height

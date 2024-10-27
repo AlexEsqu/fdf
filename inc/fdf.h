@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 23:06:55 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 09:44:20 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@
 # define ACCEPT_CHAR	"abcdefABCDEF0123456789,x-+ "
 # define BLACK			0x000000
 # define WHITE			0xffffff
+# define MATRIX_START	0x00ff60
+# define MATRIX_END		0x000800
+# define SUNSET_START	0xFF7E5F
+# define SUNSET_END		0xFEB47B
+# define OCEAN_START	0x00C9FF
+# define OCEAN_END		0x92FE9D
+# define PURPLE_START	0xA18CD1
+# define PURPLE_END		0xFBC2EB
+# define FLAME_START	0xFF9A9E
+# define FLAME_END		0xFAD0C4
+# define COOL_START		0x2193B0
+# define COOL_END		0x6DD5ED
+# define EMERALD_START	0x348F50
+# define EMERALD_END	0x56B4D3
+# define SUNNY_START	0xFF512F
+# define SUNNY_END		0xF09819
+# define AUTUMN_START	0xD38312
+# define AUTUMN_END		0xA83279
 # define PI				3.1415926535
 # define PI_BY_FOUR		0.7853981633
 # define PI_BY_SIX		0.5235987755
@@ -58,17 +76,9 @@ typedef struct s_hsv
 {
 	int		alpha_;
 	float	hue;
-	float	saturation;
+	float	sat;
 	float	value;
 }	t_hsv;
-
-typedef struct s_rgb
-{
-	int		alpha_;
-	float	red;
-	float	green;
-	float	blue;
-}	t_rgb;
 
 typedef struct s_point
 {
@@ -117,7 +127,7 @@ typedef struct s_display
 	int		unit;
 	float	elevation;
 	float	zoom;
-	bool	color_mode;
+	int		color_mode;
 	float	angle_y_axis;
 	float	angle_x_axis;
 	float	angle_z_axis;
@@ -151,6 +161,8 @@ int			get_green(int color);
 int			get_blue(int color);
 int			encode_rgb(t_byte red, t_byte green, t_byte blue);
 int			interpolate_rgb_gradient(int start_rgb, int end_rgb,
+				float progress);
+int			interpolate_hsv_gradient(int start_rgb, int end_rgb,
 				float progress);
 void		assign_color(t_display *display);
 

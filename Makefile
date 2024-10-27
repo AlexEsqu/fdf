@@ -6,7 +6,7 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/14 14:56:12 by mkling            #+#    #+#              #
-#    Updated: 2024/10/26 16:32:50 by alex             ###   ########.fr        #
+#    Updated: 2024/10/27 09:02:11 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS		= main.c \
 			parse.c \
 			trace.c \
 			render.c \
-			transform.c \
+			rotate.c \
 			color.c \
 			error.c \
 			input.c \
