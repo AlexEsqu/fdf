@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transform.c                                        :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:54:19 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 22:10:10 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 16:19:12 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	generate_rotation_matrix_z(float angle, float matrix[3][3])
 	matrix[2][2] = 1;
 }
 
-void	multiply_by_matrix(t_point *point, float matrix[3][3])
+void	multiply_point_by_matrix(t_point *point, float matrix[3][3])
 {
 	t_point	result;
 
@@ -116,9 +116,9 @@ void	rotate(t_display *display)
 	while (index < display->world->pts_count)
 	{
 		subtract_grid_center(&display->world->pts_array[index], display);
-		multiply_by_matrix(&display->world->pts_array[index], matrix_x);
-		multiply_by_matrix(&display->world->pts_array[index], matrix_y);
-		multiply_by_matrix(&display->world->pts_array[index], matrix_z);
+		multiply_point_by_matrix(&display->world->pts_array[index], matrix_z);
+		multiply_point_by_matrix(&display->world->pts_array[index], matrix_y);
+		multiply_point_by_matrix(&display->world->pts_array[index], matrix_x);
 		add_grid_center(&display->world->pts_array[index], display);
 		index++;
 	}

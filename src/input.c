@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 17:34:06 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 17:58:53 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	rotations(int keysym, t_display *display)
 		top_view(display);
 	if (keysym == XK_l)
 		front_view(display);
-	if (keysym == XK_p)
-		right_view(display);
+	if (keysym == XK_q)
+		oblique(display);
+	if (keysym == XK_e)
+		military(display);
 	if (keysym == XK_r)
 		display->angle_x_axis += 0.05;
 	if (keysym == XK_f)
@@ -55,10 +57,6 @@ void	rotations(int keysym, t_display *display)
 		display->angle_y_axis += 0.05;
 	if (keysym == XK_Right)
 		display->angle_y_axis -= 0.05;
-	if (keysym == XK_u)
-		display->elevation += 0.2;
-	if (keysym == XK_j)
-		display->elevation -= 0.2;
 }
 
 int	handle_mouse(int button, int x, int y, t_display *display)
@@ -82,6 +80,10 @@ int	handle_input(int keysym, t_display *display)
 		zoom(keysym, display);
 	if (keysym == XK_Down)
 		zoom(keysym, display);
+	if (keysym == XK_u)
+		display->elevation += 0.2;
+	if (keysym == XK_j)
+		display->elevation -= 0.2;
 	if (keysym == XK_a)
 		display->offset_x -= 10;
 	if (keysym == XK_d)

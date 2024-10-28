@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 17:45:30 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 18:16:58 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ enum	e_colors
 	BLACK = 0x000000,
 	WHITE = 0xffffff,
 	MATRIX_START = 0x00ff60,
-	MATRIX_END = 0x000800,
+	MATRIX_END = 0x001200,
 	SUNSET_START = 0xFF7E5F,
 	SUNSET_END = 0xFEB47B,
 	OCEAN_START = 0x00C9FF,
@@ -135,6 +135,7 @@ typedef struct s_display
 	float	angle_y_axis;
 	float	angle_x_axis;
 	float	angle_z_axis;
+	float	z_axis_scale;
 	t_image	img;
 	t_grid	*local;
 	t_grid	*world;
@@ -143,6 +144,7 @@ typedef struct s_display
 /* DISPLAY */
 
 t_display	init_display(char *map_filepath);
+void		initialize_window_and_offsets(t_display *display);
 void		wipe(t_display *display);
 int			handle_input(int keysym, t_display *display);
 int			handle_mouse(int button, int x, int y, t_display *display);
@@ -154,7 +156,6 @@ void		free_grid(t_grid *grid);
 void		put_pixel(t_image *image, int x, int y, int color);
 void		put_point(t_display *display, t_point point);
 void		paint_background(t_image *image, int color);
-void		reinitialize_world_grid(t_display *display);
 int			render(t_display *display);
 
 /* COLORING */
@@ -166,9 +167,9 @@ int			get_blue(int color);
 int			encode_rgb(t_byte red, t_byte green, t_byte blue);
 int			interpolate_rgb_gradient(int start_rgb, int end_rgb,
 				float progress);
-int			interpolate_hsv_gradient(int start_rgb, int end_rgb,
-				float progress);
-void		assign_color(t_display *display);
+void		assign_color_by_height(t_display *display);
+int			gradient_start(int color_mode);
+int			gradient_end(int color_mode);
 
 /* PLOTTING */
 
@@ -178,18 +179,22 @@ void		subtract_grid_center(t_point *point, t_display *display);
 void		add_grid_center(t_point *point, t_display *display);
 void		add_elevation(t_display *display);
 t_point		apply_zoom_and_offset(t_point *point, t_display *display);
+void		reinitialize_world_grid(t_display *display);
 
 /* PARSING */
 
+int			open_file(char *map_filepath, t_display *display);
 void		parse_file_into_grid(char *map_filepath, t_display *display);
+void		check_grid_size_syntax(char *map_filepath, t_display *display);
 
 /* ROTATING */
 
 void		rotate(t_display *display);
 void		isometrify(t_display *display);
+void		military(t_display *display);
+void		oblique(t_display *display);
 void		top_view(t_display *display);
 void		front_view(t_display *display);
-void		right_view(t_display *display);
 
 /* ERRORS */
 

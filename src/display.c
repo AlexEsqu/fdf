@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 17:30:18 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 17:00:34 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,15 @@ t_display	init_display(char *map_filepath)
 	return (display);
 }
 
-int	success_exit(t_display *display)
+void	initialize_window_and_offsets(t_display *display)
 {
-	wipe(display);
-	exit(0);
-	return (0);
-}
-
-void	exit_if(bool condition, char *error_message, t_display *display)
-{
-	if (condition == false)
-		return ;
-	if (error_message)
-		ft_putstr_fd(error_message, 2);
-	if (display)
-		wipe(display);
-	exit(1);
+	display->offset_x = WIN_WIDTH / 2;
+	display->offset_y = WIN_HEIGHT / 2;
+	display->unit = 1;
+	display->zoom = 10.0;
+	display->angle_x_axis = 0;
+	display->angle_y_axis = 0;
+	display->angle_z_axis = 0;
+	display->elevation = 1.0;
+	display->color_mode = 1;
 }

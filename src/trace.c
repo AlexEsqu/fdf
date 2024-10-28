@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 11:02:23 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 18:17:59 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,25 @@ float	calculate_progress(t_line *line, t_point *current)
 	return (progress);
 }
 
+void	reinitialize_world_grid(t_display *display)
+{
+	int	index;
+
+	index = 0;
+	while (index < display->local->pts_count)
+	{
+		display->world->pts_array[index]
+			= display->local->pts_array[index];
+		index++;
+	}
+}
+
 void	print_line(t_line *line, t_display *display)
 {
 	line->current = line->start;
 	while (1)
 	{
-		line->current.rgb = interpolate_hsv_gradient(line->start.rgb,
+		line->current.rgb = interpolate_rgb_gradient(line->start.rgb,
 				line->end.rgb, calculate_progress(line, &line->current));
 		put_point(display, line->current);
 		line->error2 = 2 * line->error;

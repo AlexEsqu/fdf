@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:50:50 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 17:33:45 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/28 15:48:40 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	render(t_display *display)
 		return (1);
 	paint_background(&display->img, BLACK);
 	if (display->color_mode)
-		assign_color(display);
+		assign_color_by_height(display);
 	add_elevation(display);
 	rotate(display);
 	print_grid(display->world, display);

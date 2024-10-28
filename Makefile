@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mkling <mkling@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/14 14:56:12 by mkling            #+#    #+#              #
-#    Updated: 2024/10/27 09:02:11 by alex             ###   ########.fr        #
+#    Updated: 2024/10/28 17:46:10 by mkling           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,12 @@ SRCS		= main.c \
 			render.c \
 			rotate.c \
 			color.c \
-			error.c \
 			input.c \
 			preset.c \
 			center.c \
-			gradient.c
+			gradient.c \
+			elevation.c \
+			error.c
 
 LIBS		= ./lib/libft/libft.a \
 			./lib/minilibx/libmlx.a \
@@ -40,12 +41,12 @@ OBJS		= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(addprefix $(SRC_DIR)/, $(SR
 
 CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -O3
 
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) ./inc/fdf.h
 			$(MAKE) -C ./lib/libft
 			$(MAKE) -C ./lib/minilibx
 			$(CC) $(CFLAGS) -o $(NAME) $(addprefix $(SRC_DIR)/, $(SRCS)) $(LIBS)
