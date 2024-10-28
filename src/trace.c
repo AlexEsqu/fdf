@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 09:00:24 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 11:02:23 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_line(t_line *line, t_display *display)
 	line->current = line->start;
 	while (1)
 	{
-		line->current.rgb = interpolate_rgb_gradient(line->start.rgb,
+		line->current.rgb = interpolate_hsv_gradient(line->start.rgb,
 				line->end.rgb, calculate_progress(line, &line->current));
 		put_point(display, line->current);
 		line->error2 = 2 * line->error;

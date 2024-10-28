@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:52:57 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 09:56:41 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 17:34:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	rotations(int keysym, t_display *display)
 		display->angle_y_axis += 0.05;
 	if (keysym == XK_Right)
 		display->angle_y_axis -= 0.05;
-	if (keysym ==  XK_u)
+	if (keysym == XK_u)
 		display->elevation += 0.2;
-	if (keysym ==  XK_j)
+	if (keysym == XK_j)
 		display->elevation -= 0.2;
 }
 
@@ -77,10 +77,7 @@ int	handle_input(int keysym, t_display *display)
 	rotations(keysym, display);
 	color_mode(keysym, display);
 	if (keysym == XK_Escape)
-	{
-		wipe(display);
-		exit(0);
-	}
+		success_exit(display);
 	if (keysym == XK_Up)
 		zoom(keysym, display);
 	if (keysym == XK_Down)

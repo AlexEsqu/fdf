@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/26 14:46:08 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 17:30:18 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,15 @@ int	success_exit(t_display *display)
 	wipe(display);
 	exit(0);
 	return (0);
+}
+
+void	exit_if(bool condition, char *error_message, t_display *display)
+{
+	if (condition == false)
+		return ;
+	if (error_message)
+		ft_putstr_fd(error_message, 2);
+	if (display)
+		wipe(display);
+	exit(1);
 }

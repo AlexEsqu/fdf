@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/27 09:44:20 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 17:45:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,6 @@
 # define HEXADECIMAL	"0123456789ABCDEF"
 # define SMOLHEXADEC	"0123456789abcdef"
 # define ACCEPT_CHAR	"abcdefABCDEF0123456789,x-+ "
-# define BLACK			0x000000
-# define WHITE			0xffffff
-# define MATRIX_START	0x00ff60
-# define MATRIX_END		0x000800
-# define SUNSET_START	0xFF7E5F
-# define SUNSET_END		0xFEB47B
-# define OCEAN_START	0x00C9FF
-# define OCEAN_END		0x92FE9D
-# define PURPLE_START	0xA18CD1
-# define PURPLE_END		0xFBC2EB
-# define FLAME_START	0xFF9A9E
-# define FLAME_END		0xFAD0C4
-# define COOL_START		0x2193B0
-# define COOL_END		0x6DD5ED
-# define EMERALD_START	0x348F50
-# define EMERALD_END	0x56B4D3
-# define SUNNY_START	0xFF512F
-# define SUNNY_END		0xF09819
-# define AUTUMN_START	0xD38312
-# define AUTUMN_END		0xA83279
 # define PI				3.1415926535
 # define PI_BY_FOUR		0.7853981633
 # define PI_BY_SIX		0.5235987755
@@ -62,6 +42,30 @@ enum	e_error
 {
 	SUCCESS = 0,
 	MALLOC_ERR = 1,
+};
+
+enum	e_colors
+{
+	BLACK = 0x000000,
+	WHITE = 0xffffff,
+	MATRIX_START = 0x00ff60,
+	MATRIX_END = 0x000800,
+	SUNSET_START = 0xFF7E5F,
+	SUNSET_END = 0xFEB47B,
+	OCEAN_START = 0x00C9FF,
+	OCEAN_END = 0x92FE9D,
+	PURPLE_START = 0xA18CD1,
+	PURPLE_END = 0xFBC2EB,
+	FLAME_START = 0xFF9A9E,
+	FLAME_END = 0xFAD0C4,
+	COOL_START = 0x2193B0,
+	COOL_END = 0x6DD5ED,
+	EMERALD_START = 0x348F50,
+	EMERALD_END = 0x56B4D3,
+	SUNNY_START = 0xFF512F,
+	SUNNY_END = 0xF09819,
+	AUTUMN_START = 0xD38312,
+	AUTUMN_END = 0xA83279,
 };
 
 enum	e_mouse

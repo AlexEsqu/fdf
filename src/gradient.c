@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 16:30:45 by alex              #+#    #+#             */
-/*   Updated: 2024/10/27 09:57:44 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/27 17:53:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,18 +134,6 @@ void	assign_color(t_display *display)
 {
 	int		index;
 	float	increment;
-	int		gradient[10][2] = {
-		{WHITE, WHITE},
-		{MATRIX_START, MATRIX_END},
-		{SUNSET_START, SUNSET_END},
-		{OCEAN_START, OCEAN_END},
-		{PURPLE_START, PURPLE_END},
-		{FLAME_START, FLAME_END},
-		{COOL_START, COOL_END},
-		{EMERALD_START, EMERALD_END},
-		{SUNNY_START, SUNNY_END},
-		{AUTUMN_START, AUTUMN_END}
-	};
 
 	if (display->color_mode == 0)
 		return ;
@@ -154,8 +142,8 @@ void	assign_color(t_display *display)
 	while (index < display->world->pts_count)
 	{
 		display->world->pts_array[index].rgb
-			= interpolate_rgb_gradient(gradient[display->color_mode][0],
-				gradient[display->color_mode][1], index * increment);
+			= interpolate_rgb_gradient(PURPLE_START + display->color_mode,
+				PURPLE_END + display->color_mode, index * increment);
 		index++;
 	}
 }
