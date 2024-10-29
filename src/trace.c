@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 16:04:34 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/28 18:17:59 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:39:02 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	reinitialize_world_grid(t_display *display)
 	int	index;
 
 	index = 0;
-	while (index < display->local->pts_count)
+	while (index < display->grid_point_count)
 	{
 		display->world->pts_array[index]
 			= display->local->pts_array[index];

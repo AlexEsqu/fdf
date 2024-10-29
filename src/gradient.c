@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 16:30:45 by alex              #+#    #+#             */
-/*   Updated: 2024/10/28 18:17:11 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:37:55 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,23 @@ int	interpolate_rgb_gradient(int start_rgb, int end_rgb, float progress)
 	return (encode_rgb(red, green, blue));
 }
 
-// void	assign_color_by_index(t_display *display)
-// {
-// 	int		index;
-// 	float	increment;
+void	assign_color_by_index(t_display *display)
+{
+	int		index;
+	float	increment;
 
-// 	if (display->color_mode == 0)
-// 		return ;
-// 	index = 0;
-// 	increment = 1 / (float)(display->world->pts_count - 1);
-// 	while (index < display->world->pts_count)
-// 	{
-// 		display->world->pts_array[index].rgb
-// 			= interpolate_rgb_gradient(g_colors[display->color_mode][0],
-// 				g_colors[display->color_mode][1], index * increment);
-// 		index++;
-// 	}
-// }
+	if (display->color_mode == 0)
+		return ;
+	index = 0;
+	increment = 1 / (float)(display->grid_point_count - 1);
+	while (index < display->grid_point_count)
+	{
+		display->world->pts_array[index].rgb
+			= interpolate_rgb_gradient(gradient_start(display->color_mode),
+				gradient_end(display->color_mode), index * increment);
+		index++;
+	}
+}
 
 // /* Set HSV values from the RGB integer
 // Divide RGB red, green and blue value by 255

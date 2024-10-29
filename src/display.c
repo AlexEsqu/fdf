@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:53:21 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/28 17:00:34 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:10:39 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,22 @@ void	wipe(t_display *display)
 	}
 }
 
-t_display	init_display(char *map_filepath)
+void	init_window(t_display *display)
 {
-	t_display	display;
-
-	display.link = mlx_init();
-	exit_if(!display.link, "mlx init\n", &display);
-	display.window = mlx_new_window(display.link, WIN_WIDTH, WIN_HEIGHT, "FDF");
-	exit_if((!display.window), "window allocation\n", &display);
-	display.img.mlx_img = mlx_new_image(display.link, WIN_WIDTH, WIN_HEIGHT);
-	exit_if(!display.img.mlx_img, "image allocation\n", &display);
-	display.img.address = mlx_get_data_addr(display.img.mlx_img,
-			&display.img.bit_per_pixel, &display.img.line_len,
-			&display.img.endian);
-	parse_file_into_grid(map_filepath, &display);
-	render(&display);
-	return (display);
+	display->link = mlx_init();
+	exit_if(!display->link, "mlx init\n", display);
+	display->window = mlx_new_window(display->link, WIN_WIDTH,
+			WIN_HEIGHT, "FDF");
+	exit_if((!display->window), "window allocation\n", display);
+	display->img.mlx_img = mlx_new_image(display->link, WIN_WIDTH, WIN_HEIGHT);
+	exit_if(!display->img.mlx_img, "image allocation\n", display);
+	display->img.address = mlx_get_data_addr(display->img.mlx_img,
+			&display->img.bit_per_pixel, &display->img.line_len,
+			&display->img.endian);
+	render(display);
 }
 
-void	initialize_window_and_offsets(t_display *display)
+void	init_angles_offsets(t_display *display)
 {
 	display->offset_x = WIN_WIDTH / 2;
 	display->offset_y = WIN_HEIGHT / 2;

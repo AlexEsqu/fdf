@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   center.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 16:17:08 by alex              #+#    #+#             */
-/*   Updated: 2024/10/26 16:24:51 by alex             ###   ########.fr       */
+/*   Updated: 2024/10/29 14:39:51 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 /* Put the origin of the vector at center of grid */
 void	subtract_grid_center(t_point *point, t_display *display)
 {
-	point->x = point->x - (display->world->width) / 2;
-	point->y = point->y - (display->world->height) / 2;
+	point->x = point->x - (display->grid_width) / 2;
+	point->y = point->y - (display->grid_height) / 2;
 }
 
 /* Put the origin of the vector at top left of grid */
 void	add_grid_center(t_point *point, t_display *display)
 {
-	point->x = point->x + (display->world->width) / 2;
-	point->y = point->y + (display->world->height) / 2;
+	point->x = point->x + (display->grid_width) / 2;
+	point->y = point->y + (display->grid_height) / 2;
 }
 
 /* Set distance between each points */

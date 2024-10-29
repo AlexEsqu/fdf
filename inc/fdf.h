@@ -6,7 +6,7 @@
 /*   By: mkling <mkling@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:52:14 by mkling            #+#    #+#             */
-/*   Updated: 2024/10/28 18:16:58 by mkling           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:32:20 by mkling           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,6 @@ typedef struct s_image
 typedef struct s_grid
 {
 	t_point	*pts_array;
-	int		width;
-	int		height;
-	int		pts_count;
 }	t_grid;
 
 typedef struct s_display
@@ -136,6 +133,9 @@ typedef struct s_display
 	float	angle_x_axis;
 	float	angle_z_axis;
 	float	z_axis_scale;
+	int		grid_width;
+	int		grid_height;
+	int		grid_point_count;
 	t_image	img;
 	t_grid	*local;
 	t_grid	*world;
@@ -143,8 +143,8 @@ typedef struct s_display
 
 /* DISPLAY */
 
-t_display	init_display(char *map_filepath);
-void		initialize_window_and_offsets(t_display *display);
+void		init_window(t_display *display);
+void		init_angles_offsets(t_display *display);
 void		wipe(t_display *display);
 int			handle_input(int keysym, t_display *display);
 int			handle_mouse(int button, int x, int y, t_display *display);
@@ -168,6 +168,7 @@ int			encode_rgb(t_byte red, t_byte green, t_byte blue);
 int			interpolate_rgb_gradient(int start_rgb, int end_rgb,
 				float progress);
 void		assign_color_by_height(t_display *display);
+void		assign_color_by_index(t_display *display);
 int			gradient_start(int color_mode);
 int			gradient_end(int color_mode);
 
@@ -185,7 +186,7 @@ void		reinitialize_world_grid(t_display *display);
 
 int			open_file(char *map_filepath, t_display *display);
 void		parse_file_into_grid(char *map_filepath, t_display *display);
-void		check_grid_size_syntax(char *map_filepath, t_display *display);
+void		check_file_syntax(char *map_filepath, t_display *display);
 
 /* ROTATING */
 
