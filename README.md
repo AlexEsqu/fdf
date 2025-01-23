@@ -10,23 +10,20 @@ I also discovered that my math teacher was right : I *will* need matrix transfor
 
 ## Requirement
 
-* MinilibX, a lighter version of the X11 library
+* MinilibX, a lighter version of the X11 library, which requires libx11-dev, libxext-dev and libbsd-dev
 * Make
-* GCC or Clang 
-
-## Contributing
+* GCC or Clang
 
 ### Clone the repo
 
 ```bash
-git clone https://github.com/AlexEsqu/fdf
-cd fdf
+git clone --recurse-submodules https://github.com/AlexEsqu/fdf
 ```
 
 ### Build the project
 
 ```bash
-make
+cd fdf && make
 ```
 
 ### Run the project
