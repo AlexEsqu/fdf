@@ -3,6 +3,9 @@
 Projects elevation maps into a 3D height map, with modifiable projection type, color or elevation !
 Done in C with homemade math and libc libraries, to get intimate with vectors and matrixes.
 
+![rotating pyramid](https://github.com/AlexEsqu/fdf/blob/main/fdfpylone.gif)
+![rotating colored 3d 42](https://github.com/AlexEsqu/fdf/blob/main/fdf42.gif)
+
 ## Motivation
 
 Who doesn't want to zoom past montains, and play with worlds at their commands ? This is the first step. 
